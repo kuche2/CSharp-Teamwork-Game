@@ -35,6 +35,7 @@ namespace TeamWork_CSharp2
 
         private static void loading()
         {
+            /* Не пипай ако не знаеш какво правиш! :)*/ 
             var projectDirectory = Path.GetDirectoryName(Path.GetDirectoryName(System.IO.Directory.GetCurrentDirectory()));
             Image image = Image.FromFile(projectDirectory + "\\player.jpg");
             Console.SetBufferSize((image.Width * 0x4), (image.Height * 0x4));
