@@ -21,13 +21,14 @@ namespace TeamWork_CSharp2
             //    Console.WriteLine("{0}: X={1}, Y={2}",
             //       fonts[f].Index, fonts[f].SizeX, fonts[f].SizeY);
             ConsoleHelper.SetConsoleFont(0);
-            Console.WindowHeight = 78;
+            Console.WindowHeight = 117;
             Console.WindowWidth = 120;
             Console.BufferHeight = Console.WindowHeight;
             Console.BufferWidth = Console.WindowWidth;
             Console.WriteLine();
             //loading();
-            spider();
+            playership();
+            //spider();
             //Brand();
             Thread.Sleep(1000);
         }
@@ -35,7 +36,7 @@ namespace TeamWork_CSharp2
         private static void loading()
         {
             var projectDirectory = Path.GetDirectoryName(Path.GetDirectoryName(System.IO.Directory.GetCurrentDirectory()));
-            Image image = Image.FromFile(projectDirectory + "\\sp-mini.jpg");
+            Image image = Image.FromFile(projectDirectory + "\\player.jpg");
             Console.SetBufferSize((image.Width * 0x4), (image.Height * 0x4));
             FrameDimension Dimension = new FrameDimension(image.FrameDimensionsList[0x0]);
             int FrameCount = image.GetFrameCount(Dimension);
@@ -171,6 +172,51 @@ namespace TeamWork_CSharp2
             Console.WriteLine(":::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::");
             Console.WriteLine(":::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::");
             Console.WriteLine(":::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::");
+        }
+        static void playership()
+        {
+            Console.WriteLine("                        --                      ");
+            Console.WriteLine("                  :-    %@    -:                ");
+            Console.WriteLine("                  %#=   ##   +#%                ");
+            Console.WriteLine("                  ##=   ##-  +##-               ");
+            Console.WriteLine("                 *##*  *##+  *##+               ");
+            Console.WriteLine("                 %##:  @###  -##@               ");
+            Console.WriteLine("                 ##*   ####   *##               ");
+            Console.WriteLine("                -#%   :#@@#*   =#:              ");
+            Console.WriteLine("                =@%   +#=+#%   =#%              ");
+            Console.WriteLine("                #@%   @@##%#   =@@-             ");
+            Console.WriteLine("               :%@%   @+##%@   =@%*             ");
+            Console.WriteLine("               +=@= - *=%##* - =#==             ");
+            Console.WriteLine("               ==#=+% *@###+ ==+#=%             ");
+            Console.WriteLine("               #+#++% %####% ==+#+#             ");
+            Console.WriteLine("               #+#++= %####@ +=*#+#             ");
+            Console.WriteLine("               ==@+*+ @%###% ***@=%             ");
+            Console.WriteLine("              %@@#+:* %%###= ***#@@%            ");
+            Console.WriteLine("             -%%##*:* %@###% :*:##@%:           ");
+            Console.WriteLine("             %==@#%@::%%@##=*-@=##==@           ");
+            Console.WriteLine("            -++=@=##-:@=@#%%*-##=@=++:          ");
+            Console.WriteLine("            %%##@@=#--#%%#%#:-#=@@##%%          ");
+            Console.WriteLine("           :###@##=#=:#%@#=#*+#=##@###:         ");
+            Console.WriteLine("           *##@###=@#@@=##=@@#@=###@##=         ");
+            Console.WriteLine("          +%=%#%=#%%##%=##==##%%#=%#@=%=        ");
+            Console.WriteLine("         -#@=#%=@##%##%%@#%=##%@#@%%#%%#*       ");
+            Console.WriteLine("         ####%===##%###=@@=###%##%===####       ");
+            Console.WriteLine("        *###+++++##=###=@#=@##=##+++++###=      ");
+            Console.WriteLine("       -###++@@+=##=@##@#####@=@#%+@@=+###-     ");
+            Console.WriteLine("       -#####@###@%+@####@###@+%@###@#####:     ");
+            Console.WriteLine("       +####@@%:===-%###=+###@-===:=@@####=     ");
+            Console.WriteLine("      +#######: @@@-+##    ##= @@@ -#######=    ");
+            Console.WriteLine("     +###@####* =%#=-##    ##-+#%% :####@###=   ");
+            Console.WriteLine("    -###@###@-  +=%@ ###  ### =@==  -%###@###:  ");
+            Console.WriteLine("   :@#%###@:    **=@ @##  ### =%*+    :@###%##: ");
+            Console.WriteLine("  +%@@##@*      :*+= +#:  :#= +=*:      :@##@#%+");
+            Console.WriteLine("  =####*        -:+= :#*  :#* *+::        *####=");
+            Console.WriteLine("  -%#+            *+  ##  ##- *+-           *#@-");
+            Console.WriteLine("                  ::  #%  =#  -:                ");
+            Console.WriteLine("                      +:  :=   -                ");
+            Console.WriteLine("                                                ");
+            Console.WriteLine("                                                ");
+            Console.WriteLine("                                                ");
         }
     }
 }
