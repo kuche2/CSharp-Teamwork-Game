@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 using AirplaneNext = AirplaneShooterNext.AirplaneNext;
 
 namespace AirplainShooterNext
@@ -37,7 +38,6 @@ namespace AirplainShooterNext
                     {
                         AirplaneNext.DrawFigureAtPosition(--X, Y, ConsoleColor.DarkYellow, Shape);
                         AirplaneNext.DrawFigureAtPosition(X + 5, Y, ConsoleColor.DarkYellow, AirplaneNext.littleAimEmpty);
-                        
                     }
                     else
                     {
@@ -56,14 +56,22 @@ namespace AirplainShooterNext
                         {
                             AirplaneNext.DrawFigureAtPosition(X - 1, Y, ConsoleColor.DarkYellow, AirplaneNext.littleAimEmpty);
                         }
-                        
-                        
                     }
                     else
                     {
                         AirplaneNext.direction = "left";
                     }
                     break;
+            }
+        }
+
+        public void Shoot()
+        {
+            if (X%10 == 0)
+            {
+                AirplaneNext.EnemyShooting(X + 2, Y + 3, ConsoleColor.White, 'Y');
+                Thread.Sleep(50);
+                AirplaneNext.EnemyShooting(X + 2, Y + 2, ConsoleColor.White, ' ');    
             }
         }
     }

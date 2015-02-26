@@ -1,37 +1,68 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Cryptography.X509Certificates;
-using System.Text;
 using System.Threading;
 using AirplainShooterNext;
 
 namespace AirplaneShooterNext
 {
+    public class Hero
+    {
+        public static void UserAiplainKeysOptions()
+        {
+            // user keys : "<" , ">" , "space" - shooting
+            while (Console.KeyAvailable)
+            {
+                ConsoleKeyInfo userInput = Console.ReadKey();
+                if (userInput.Key == ConsoleKey.LeftArrow)
+                {
+                    AirplaneNext.currentAirplainPosX--;
+                    AirplaneNext.AirplainMovingLimits();
+                    Console.SetCursorPosition(AirplaneNext.currentAirplainPosX + 7, AirplaneNext.currentAirplainPosY + 2);
+                    Console.Write(' ');
+                    AirplaneNext.DrawFigureAtPosition(AirplaneNext.currentAirplainPosX, AirplaneNext.currentAirplainPosY, ConsoleColor.DarkGreen, AirplaneNext.airplain);
+                }
+                if (userInput.Key == ConsoleKey.RightArrow)
+                {
+                    AirplaneNext.currentAirplainPosX++;
+                    AirplaneNext.AirplainMovingLimits();
+                    Console.SetCursorPosition(AirplaneNext.currentAirplainPosX - 1, AirplaneNext.currentAirplainPosY + 2);
+                    Console.Write(' ');
+                    AirplaneNext.DrawFigureAtPosition(AirplaneNext.currentAirplainPosX, AirplaneNext.currentAirplainPosY, ConsoleColor.DarkGreen, AirplaneNext.airplain);
+                }
+
+                if (userInput.Key == ConsoleKey.Spacebar)
+                {
+                    AirplaneNext.Shooting(AirplaneNext.currentAirplainPosX + 3, AirplaneNext.currentAirplainPosY + 1, ConsoleColor.Magenta, '^');
+                    Thread.Sleep(50);
+                    AirplaneNext.Shooting(AirplaneNext.currentAirplainPosX + 3, AirplaneNext.currentAirplainPosY, ConsoleColor.Magenta, ' ');
+                }
+            }
+        }
+    }
+
     class AirplaneNext
     {
-        static Random randNum = new Random();
+        public static Random randNum = new Random();
 
-        static char[,] airplainEmpty = { {' ', ' ', ' ', ' ', ' ', ' ', ' '},
+        public static char[,] airplainEmpty = { {' ', ' ', ' ', ' ', ' ', ' ', ' '},
                                          {' ', ' ', ' ', ' ', ' ', ' ', ' '},
                                          {' ', ' ', ' ', ' ', ' ', ' ', ' '},
                                          {' ', ' ', ' ', ' ', ' ', ' ', ' '}  };
 
-        static char[,] airplain = {  {' ', ' ', ' ', '*', ' ', ' ', ' '},
+        public static char[,] airplain = {  {' ', ' ', ' ', '*', ' ', ' ', ' '},
                                      {' ', ' ', '*', 'o', '*', ' ', ' '},
                                      {'*', '*', '|', '*', '|', '*', '*'},
                                      {' ', 'v', '*', '^', '*', 'v', ' '}  };
-        static int currentAirplainPosX = Console.WindowWidth / 2 - airplain.GetLength(0);
-        static int currentAirplainPosY = Console.WindowHeight - airplain.GetLength(1) + 2;
+        public static int currentAirplainPosX = Console.WindowWidth / 2 - airplain.GetLength(0);
+        public static int currentAirplainPosY = Console.WindowHeight - airplain.GetLength(1) + 2;
 
-        static char[,] bigAim = {  {'*', ' ', ' ', ' ', ' ', '*', ' ', ' ', ' ', ' ', '*'},
+        public static char[,] bigAim = {  {'*', ' ', ' ', ' ', ' ', '*', ' ', ' ', ' ', ' ', '*'},
                                    {' ', '*', '*', ' ', ' ', '*', ' ', ' ', '*', '*', ' '},
                                    {' ', ' ', ' ', '*', '*', 'o', '*', '*', ' ', ' ', ' '},
                                    {' ', ' ', ' ', '*', '*', 'v', '*', '*', ' ', ' ', ' '},
                                    {' ', '*', '*', ' ', ' ', '*', ' ', ' ', '*', '*', ' '},
                                    {'*', ' ', ' ', ' ', ' ', 'V', ' ', ' ', ' ', ' ', '*'}  };
-        static int currentBigAimPosX = Console.WindowWidth / 2 - bigAim.GetLength(0);
-        static int currentBigAimPosY = bigAim.GetLength(0) - 2;
+        public static int currentBigAimPosX = Console.WindowWidth / 2 - bigAim.GetLength(0);
+        public static int currentBigAimPosY = bigAim.GetLength(0) - 2;
 
         public static char[,] littleAim = {  {'*', ' ', '*', ' ', '*'},
                                       {' ', '*', '*', '*', ' '},
@@ -42,10 +73,10 @@ namespace AirplaneShooterNext
         //                              {' ', ' ', ' ', ' ', ' '},
         //                              {' ', ' ', ' ', ' ', ' '}  };
         public static char[,] littleAimEmpty = { { ' ' }, { ' ' }, { ' ' }, { ' ' }, { ' ' } };
-        static int currentLittleAimPosX = currentBigAimPosX - 13;
-        static int currentLittleAimPosY = currentBigAimPosY - 2;
+        public static int currentLittleAimPosX = currentBigAimPosX - 13;
+        public static int currentLittleAimPosY = currentBigAimPosY - 2;
 
-        struct Bullet
+        public struct Bullet
         {
             public int X;
             public int Y;
@@ -60,8 +91,22 @@ namespace AirplaneShooterNext
                 this.Bullets = bull;
             }
         }
+        public struct EnemyBullet
+        {
+            public int X;
+            public int Y;
+            public ConsoleColor Color;
+            public char Bullets;
 
-        private static void Shooting(int x, int y, ConsoleColor color, char bulletChar)
+            public EnemyBullet(int x, int y, ConsoleColor color, char bull)
+            {
+                this.X = x;
+                this.Y = y;
+                this.Color = color;
+                this.Bullets = bull;
+            }
+        }
+        public static void Shooting(int x, int y, ConsoleColor color, char bulletChar)
         {
             Bullet playerBull = new Bullet();
             playerBull.X = x;
@@ -78,7 +123,24 @@ namespace AirplaneShooterNext
             }
         }
 
-        private static void AirplainMovingLimits()
+        public static void EnemyShooting(int x, int y, ConsoleColor color, char bulletChar)
+        {
+            EnemyBullet enemyBull = new EnemyBullet();
+            enemyBull.X = x;
+            enemyBull.Y = y;
+            enemyBull.Color = color;
+            enemyBull.Bullets = bulletChar;
+
+            while (enemyBull.Y < 43)
+            {
+                Console.ForegroundColor = enemyBull.Color;
+                Console.SetCursorPosition(enemyBull.X, enemyBull.Y);
+                Console.WriteLine(enemyBull.Bullets);
+                enemyBull.Y++;
+            }
+        }
+
+        public static void AirplainMovingLimits()
         {
             if (currentAirplainPosX == 0)
             {
@@ -92,37 +154,7 @@ namespace AirplaneShooterNext
             }
         }
 
-        private static void UserAiplainKeysOptions()
-        {
-            // user keys : "<" , ">" , "space" - shooting
-            while (Console.KeyAvailable)
-            {
-                ConsoleKeyInfo userInput = Console.ReadKey();
-                if (userInput.Key == ConsoleKey.LeftArrow)
-                {
-                    currentAirplainPosX--;
-                    AirplainMovingLimits();
-                    Console.SetCursorPosition(currentAirplainPosX + 7, currentAirplainPosY + 2);
-                    Console.Write(' ');
-                    DrawFigureAtPosition(currentAirplainPosX, currentAirplainPosY, ConsoleColor.DarkGreen, airplain);
-                }
-                if (userInput.Key == ConsoleKey.RightArrow)
-                {
-                    currentAirplainPosX++;
-                    AirplainMovingLimits();
-                    Console.SetCursorPosition(currentAirplainPosX - 1, currentAirplainPosY + 2);
-                    Console.Write(' ');
-                    DrawFigureAtPosition(currentAirplainPosX, currentAirplainPosY, ConsoleColor.DarkGreen, airplain);
-                }
-
-                if (userInput.Key == ConsoleKey.Spacebar)
-                {
-                    Shooting(currentAirplainPosX + 3, currentAirplainPosY + 1, ConsoleColor.Magenta, '^');
-                    Thread.Sleep(50);
-                    Shooting(currentAirplainPosX + 3, currentAirplainPosY, ConsoleColor.Magenta, ' ');
-                }
-            }
-        }
+        
 
         public static void EnemiesFigureConfiguration2()
         {
@@ -209,7 +241,8 @@ namespace AirplaneShooterNext
 
 
         public static string direction = "left";
-        static void Main(string[] args)
+
+   static void Main(string[] args)
         {
             BufferSizeTitle();
             LittleEnemy testEnemy = new LittleEnemy(20, 10, ConsoleColor.DarkYellow, littleAim);
@@ -218,16 +251,15 @@ namespace AirplaneShooterNext
             while (true)
             {
                 DrawFigureAtPosition(currentAirplainPosX, currentAirplainPosY, ConsoleColor.DarkGreen, airplain);
-
+                Hero.UserAiplainKeysOptions();
                 //EnemiesFigureConfiguration1();
 
                 testEnemy.Move();
+                testEnemy.Shoot();
                 testEnemy2.Move();
-
-                UserAiplainKeysOptions();
+                testEnemy2.Shoot();
 
                 Thread.Sleep(50);
-
                 //RandomEnemies shooting();
 
                 //AirplainDyingConditions();
