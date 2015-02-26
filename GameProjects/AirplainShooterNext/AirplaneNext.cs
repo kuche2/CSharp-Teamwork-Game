@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading;
+using AirplainShooterNext;
 
-namespace AirplaneNext
+namespace AirplaneShooterNext
 {
     class AirplaneNext
     {
@@ -31,10 +33,15 @@ namespace AirplaneNext
         static int currentBigAimPosX = Console.WindowWidth / 2 - bigAim.GetLength(0);
         static int currentBigAimPosY = bigAim.GetLength(0) - 2;
 
-        static char[,] littleAim = {  {'*', ' ', '*', ' ', '*'},
+        public static char[,] littleAim = {  {'*', ' ', '*', ' ', '*'},
                                       {' ', '*', '*', '*', ' '},
                                       {' ', '*', 'o', '*', ' '},
                                       {'*', ' ', 'V', ' ', '*'}  };
+        //public static char[,] littleAimEmpty = {  {' ', ' ', ' ', ' ', ' '},
+        //                              {' ', ' ', ' ', ' ', ' '},
+        //                              {' ', ' ', ' ', ' ', ' '},
+        //                              {' ', ' ', ' ', ' ', ' '}  };
+        public static char[,] littleAimEmpty = { { ' ' }, { ' ' }, { ' ' }, { ' ' }, { ' ' } };
         static int currentLittleAimPosX = currentBigAimPosX - 13;
         static int currentLittleAimPosY = currentBigAimPosY - 2;
 
@@ -117,7 +124,7 @@ namespace AirplaneNext
             }
         }
 
-        private static void EnemiesFigureConfiguration2()
+        public static void EnemiesFigureConfiguration2()
         {
             DrawFigureAtPosition(currentBigAimPosX, currentBigAimPosY + 2, ConsoleColor.DarkRed, bigAim);
 
@@ -132,7 +139,7 @@ namespace AirplaneNext
             DrawFigureAtPosition(currentLittleAimPosX + 16, currentLittleAimPosY + 13, ConsoleColor.DarkYellow, littleAim);
         }
 
-        private static void EnemiesFigureConfiguration1()
+        public static void EnemiesFigureConfiguration1()
         {
             DrawFigureAtPosition(currentBigAimPosX, currentBigAimPosY + 3, ConsoleColor.DarkRed, bigAim);
 
@@ -162,25 +169,64 @@ namespace AirplaneNext
             }
         }
 
-        private static void BufferSizeTitle()
+        public static void BufferSizeTitle()
         {
             Console.Title = "Airplain Shooter";
             Console.BufferWidth = Console.WindowWidth;
             Console.BufferHeight = Console.WindowHeight;
             Console.CursorVisible = false;
         }
+        //static string direction = "left";
+        //private static void MoveEnemy()
+        //{
+        //    switch (direction)
+        //    {
+        //        case "left": 
+        //            if (currentLittleAimPosX > 10)
+        //            {
+        //                DrawFigureAtPosition(currentLittleAimPosX, currentLittleAimPosY, ConsoleColor.DarkYellow, littleAimEmpty);
+        //                DrawFigureAtPosition(--currentLittleAimPosX, currentLittleAimPosY, ConsoleColor.DarkYellow, littleAim);
+        //            }
+        //            else
+        //            {
+        //                direction = "right";
+        //            }
+        //            break;
+        //        case "right": 
+        //            if (currentLittleAimPosX < 35)
+        //            {
+        //                DrawFigureAtPosition(currentLittleAimPosX, currentLittleAimPosY, ConsoleColor.DarkYellow, littleAimEmpty);
+        //                DrawFigureAtPosition(++currentLittleAimPosX, currentLittleAimPosY, ConsoleColor.DarkYellow, littleAim);
+        //            }
+        //            else
+        //            {
+        //            direction = "left";
+        //            }
+        //            break;
+        //    }
+            
+        //}
 
+
+        public static string direction = "left";
         static void Main(string[] args)
         {
             BufferSizeTitle();
-
+            LittleEnemy testEnemy = new LittleEnemy(20, 10, ConsoleColor.DarkYellow, littleAim);
+            LittleEnemy testEnemy2 = new LittleEnemy(40, 10, ConsoleColor.DarkYellow, littleAim);
+            
             while (true)
             {
                 DrawFigureAtPosition(currentAirplainPosX, currentAirplainPosY, ConsoleColor.DarkGreen, airplain);
 
-                EnemiesFigureConfiguration1();
+                //EnemiesFigureConfiguration1();
+
+                testEnemy.Move();
+                testEnemy2.Move();
 
                 UserAiplainKeysOptions();
+
+                Thread.Sleep(50);
 
                 //RandomEnemies shooting();
 
