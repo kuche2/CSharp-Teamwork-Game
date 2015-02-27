@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Security.Cryptography.X509Certificates;
 using System.Threading;
 using AirplainShooterNext;
 
@@ -68,10 +70,10 @@ namespace AirplaneShooterNext
                                       {' ', '*', '*', '*', ' '},
                                       {' ', '*', 'o', '*', ' '},
                                       {'*', ' ', 'V', ' ', '*'}  };
-        //public static char[,] littleAimEmpty = {  {' ', ' ', ' ', ' ', ' '},
-        //                              {' ', ' ', ' ', ' ', ' '},
-        //                              {' ', ' ', ' ', ' ', ' '},
-        //                              {' ', ' ', ' ', ' ', ' '}  };
+        public static char[,] littleAimClear = {  {' ', ' ', ' ', ' ', ' '},
+                                      {' ', ' ', ' ', ' ', ' '},
+                                      {' ', ' ', ' ', ' ', ' '},
+                                      {' ', ' ', ' ', ' ', ' '}  };
         public static char[,] littleAimEmpty = { { ' ' }, { ' ' }, { ' ' }, { ' ' }, { ' ' } };
         public static int currentLittleAimPosX = currentBigAimPosX - 13;
         public static int currentLittleAimPosY = currentBigAimPosY - 2;
@@ -106,6 +108,7 @@ namespace AirplaneShooterNext
                 this.Bullets = bull;
             }
         }
+
         public static void Shooting(int x, int y, ConsoleColor color, char bulletChar)
         {
             Bullet playerBull = new Bullet();
@@ -114,12 +117,22 @@ namespace AirplaneShooterNext
             playerBull.Color = color;
             playerBull.Bullets = bulletChar;
 
-            while (playerBull.Y > 0)
+            while (playerBull.Y >= 0)
             {
                 Console.ForegroundColor = playerBull.Color;
                 Console.SetCursorPosition(playerBull.X, playerBull.Y);
                 Console.WriteLine(playerBull.Bullets);
                 playerBull.Y--;
+                for (int i = 0; i < enemies.Count; i++)
+                {
+                    if (playerBull.Y == enemies[i].Y + 3 && playerBull.X >= enemies[i].X && playerBull.X <= enemies[i].X + 4)
+                    {
+                        DrawFigureAtPosition(enemies[i].X, enemies[i].Y, ConsoleColor.DarkYellow, littleAimClear);
+                        enemies.RemoveAt(i);
+                        playerBull.Y = 0;
+                        break;
+                    }
+                }
             }
         }
 
@@ -153,8 +166,6 @@ namespace AirplaneShooterNext
                 currentAirplainPosX -= 1;
             }
         }
-
-        
 
         public static void EnemiesFigureConfiguration2()
         {
@@ -208,57 +219,33 @@ namespace AirplaneShooterNext
             Console.BufferHeight = Console.WindowHeight;
             Console.CursorVisible = false;
         }
-        //static string direction = "left";
-        //private static void MoveEnemy()
-        //{
-        //    switch (direction)
-        //    {
-        //        case "left": 
-        //            if (currentLittleAimPosX > 10)
-        //            {
-        //                DrawFigureAtPosition(currentLittleAimPosX, currentLittleAimPosY, ConsoleColor.DarkYellow, littleAimEmpty);
-        //                DrawFigureAtPosition(--currentLittleAimPosX, currentLittleAimPosY, ConsoleColor.DarkYellow, littleAim);
-        //            }
-        //            else
-        //            {
-        //                direction = "right";
-        //            }
-        //            break;
-        //        case "right": 
-        //            if (currentLittleAimPosX < 35)
-        //            {
-        //                DrawFigureAtPosition(currentLittleAimPosX, currentLittleAimPosY, ConsoleColor.DarkYellow, littleAimEmpty);
-        //                DrawFigureAtPosition(++currentLittleAimPosX, currentLittleAimPosY, ConsoleColor.DarkYellow, littleAim);
-        //            }
-        //            else
-        //            {
-        //            direction = "left";
-        //            }
-        //            break;
-        //    }
-            
-        //}
 
+        public static bool goLeft = true;
 
-        public static string direction = "left";
+        public static List<LittleEnemy> enemies = new List<LittleEnemy>();
 
-   static void Main(string[] args)
+        static void Main()
         {
             BufferSizeTitle();
-            LittleEnemy testEnemy = new LittleEnemy(20, 10, ConsoleColor.DarkYellow, littleAim);
-            LittleEnemy testEnemy2 = new LittleEnemy(40, 10, ConsoleColor.DarkYellow, littleAim);
-            
+            //LittleEnemy testEnemy = new LittleEnemy(20, 10, ConsoleColor.DarkYellow, littleAim);
+            //LittleEnemy testEnemy2 = new LittleEnemy(40, 10, ConsoleColor.DarkYellow, littleAim);
+            for (int i = 1; i < 7; i++)
+            {
+                var enemy = new LittleEnemy(i * 8, i % 2 * 10, ConsoleColor.DarkYellow, littleAim);
+                enemies.Add(enemy);
+            }
+
             while (true)
             {
                 DrawFigureAtPosition(currentAirplainPosX, currentAirplainPosY, ConsoleColor.DarkGreen, airplain);
                 Hero.UserAiplainKeysOptions();
                 //EnemiesFigureConfiguration1();
-
-                testEnemy.Move();
-                testEnemy.Shoot();
-                testEnemy2.Move();
-                testEnemy2.Shoot();
-
+                for (int i = 0; i < enemies.Count; i++)
+                {
+                    enemies[i].Move();
+                    enemies[i].Shoot();
+                    
+                }
                 Thread.Sleep(50);
                 //RandomEnemies shooting();
 

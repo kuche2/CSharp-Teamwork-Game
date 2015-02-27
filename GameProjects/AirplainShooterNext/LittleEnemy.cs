@@ -31,9 +31,9 @@ namespace AirplainShooterNext
 
         public void Move()
         {
-            switch (AirplaneNext.direction)
+            switch (AirplaneNext.goLeft)
             {
-                case "left":
+                case true:
                     if (X > 0)
                     {
                         AirplaneNext.DrawFigureAtPosition(--X, Y, ConsoleColor.DarkYellow, Shape);
@@ -41,10 +41,10 @@ namespace AirplainShooterNext
                     }
                     else
                     {
-                        AirplaneNext.direction = "right";
+                        AirplaneNext.goLeft = false;
                     }
                     break;
-                case "right":
+                case false:
                     if (X < 75)
                     {
                         AirplaneNext.DrawFigureAtPosition(++X, Y, ConsoleColor.DarkYellow, Shape);
@@ -59,7 +59,7 @@ namespace AirplainShooterNext
                     }
                     else
                     {
-                        AirplaneNext.direction = "left";
+                        AirplaneNext.goLeft = true;
                     }
                     break;
             }
@@ -67,7 +67,8 @@ namespace AirplainShooterNext
 
         public void Shoot()
         {
-            if (X%10 == 0)
+            int random = AirplaneNext.randNum.Next(0, 20);
+            if (random == 10)
             {
                 AirplaneNext.EnemyShooting(X + 2, Y + 3, ConsoleColor.White, 'Y');
                 Thread.Sleep(50);
