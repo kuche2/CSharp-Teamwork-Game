@@ -224,28 +224,39 @@ namespace AirplaneShooterNext
 
         public static List<LittleEnemy> enemies = new List<LittleEnemy>();
 
-        static void Main()
+        public static void CreateLittleEnemies(int number)
         {
-            BufferSizeTitle();
-            //LittleEnemy testEnemy = new LittleEnemy(20, 10, ConsoleColor.DarkYellow, littleAim);
-            //LittleEnemy testEnemy2 = new LittleEnemy(40, 10, ConsoleColor.DarkYellow, littleAim);
-            for (int i = 1; i < 7; i++)
+            for (int i = 1; i <= number; i++)
             {
                 var enemy = new LittleEnemy(i * 8, i % 2 * 10, ConsoleColor.DarkYellow, littleAim);
                 enemies.Add(enemy);
             }
 
+        }
+
+        static void Main()
+        {
+            BufferSizeTitle();
+            //LittleEnemy testEnemy = new LittleEnemy(20, 10, ConsoleColor.DarkYellow, littleAim);
+            //LittleEnemy testEnemy2 = new LittleEnemy(40, 10, ConsoleColor.DarkYellow, littleAim);
+            
             while (true)
             {
                 DrawFigureAtPosition(currentAirplainPosX, currentAirplainPosY, ConsoleColor.DarkGreen, airplain);
                 Hero.UserAiplainKeysOptions();
                 //EnemiesFigureConfiguration1();
+                if (enemies.Count == 0)
+                {
+                    CreateLittleEnemies(6);
+                }
+                
                 for (int i = 0; i < enemies.Count; i++)
                 {
                     enemies[i].Move();
                     enemies[i].Shoot();
                     
                 }
+
                 Thread.Sleep(50);
                 //RandomEnemies shooting();
 
