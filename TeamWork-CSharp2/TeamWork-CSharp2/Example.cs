@@ -21,7 +21,7 @@ namespace TeamWork_CSharp2
             //    Console.WriteLine("{0}: X={1}, Y={2}",
             //       fonts[f].Index, fonts[f].SizeX, fonts[f].SizeY);
             ConsoleHelper.SetConsoleFont(0);
-            Console.WindowHeight = 117;
+            Console.WindowHeight = 89;
             Console.WindowWidth = 120;
             Console.BufferHeight = Console.WindowHeight;
             Console.BufferWidth = Console.WindowWidth;
