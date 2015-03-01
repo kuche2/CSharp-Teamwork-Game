@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Security.Cryptography.X509Certificates;
 using System.Threading;
 using AirplainShooterNext;
+using ConsoleExtender;
 
 namespace AirplaneShooterNext
 {
@@ -236,6 +237,12 @@ namespace AirplaneShooterNext
 
         static void Main()
         {
+
+            ConsoleHelper.SetConsoleFont(0);
+            Console.WindowHeight = 89;
+            Console.WindowWidth = 120;
+            Console.BufferHeight = Console.WindowHeight;
+            Console.BufferWidth = Console.WindowWidth;
             BufferSizeTitle();
             //LittleEnemy testEnemy = new LittleEnemy(20, 10, ConsoleColor.DarkYellow, littleAim);
             //LittleEnemy testEnemy2 = new LittleEnemy(40, 10, ConsoleColor.DarkYellow, littleAim);
