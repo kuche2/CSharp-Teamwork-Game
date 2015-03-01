@@ -117,6 +117,11 @@ namespace AirplaneShooterNext
             playerBull.Y = y;
             playerBull.Color = color;
             playerBull.Bullets = bulletChar;
+            Audio sp = new Audio();
+            Audio sp2 = new Audio();
+            Thread tid = new Thread(new ThreadStart(sp.shot));
+            Thread tid2 = new Thread(new ThreadStart(sp2.destroy));
+            tid.Start();
 
             while (playerBull.Y >= 0)
             {
@@ -130,7 +135,8 @@ namespace AirplaneShooterNext
                     {
                         DrawFigureAtPosition(enemies[i].X, enemies[i].Y, ConsoleColor.DarkYellow, littleAimClear);
                         enemies.RemoveAt(i);
-                        playerBull.Y = 0;
+                        playerBull.Y = 0; 
+                        tid2.Start();
                         break;
                     }
                 }
@@ -144,6 +150,8 @@ namespace AirplaneShooterNext
             enemyBull.Y = y;
             enemyBull.Color = color;
             enemyBull.Bullets = bulletChar;
+            Audio sp = new Audio();
+            sp.enemyshot();
 
             while (enemyBull.Y < 43)
             {
@@ -238,8 +246,8 @@ namespace AirplaneShooterNext
         static void Main()
         {
 
-            ConsoleHelper.SetConsoleFont(0);
-            Console.WindowHeight = 89;
+            ConsoleHelper.SetConsoleFont(2);
+            Console.WindowHeight = 78;
             Console.WindowWidth = 120;
             Console.BufferHeight = Console.WindowHeight;
             Console.BufferWidth = Console.WindowWidth;

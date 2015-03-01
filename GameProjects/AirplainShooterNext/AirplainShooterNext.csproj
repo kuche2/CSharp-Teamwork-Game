@@ -42,12 +42,18 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AirplaneNext.cs" />
+    <Compile Include="Audio.cs" />
     <Compile Include="ConsoleHelper.cs" />
     <Compile Include="LittleEnemy.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Audio\AlienLasser.wav" />
+    <Content Include="Audio\Explode.wav" />
+    <Content Include="Audio\Laser.wav" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
