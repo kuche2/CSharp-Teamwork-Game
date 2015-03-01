@@ -38,6 +38,16 @@ namespace AirplaneShooterNext
                     Thread.Sleep(50);
                     AirplaneNext.Shooting(AirplaneNext.currentAirplainPosX + 3, AirplaneNext.currentAirplainPosY, ConsoleColor.Magenta, ' ');
                 }
+                if (userInput.Key == ConsoleKey.P)
+                {
+                    while(true)
+                    {
+                        if(Console.ReadKey().Key == ConsoleKey.P)
+                        {
+                            break;
+                        }
+                    }
+                }
             }
         }
     }
@@ -56,7 +66,7 @@ namespace AirplaneShooterNext
                                      {'*', '*', '|', '*', '|', '*', '*'},
                                      {' ', 'v', '*', '^', '*', 'v', ' '}  };
         public static int currentAirplainPosX = Console.WindowWidth / 2 - airplain.GetLength(0);
-        public static int currentAirplainPosY = Console.WindowHeight - airplain.GetLength(1) + 2;
+        public static int currentAirplainPosY = 74 - airplain.GetLength(1) + 2;
 
         public static char[,] bigAim = {  {'*', ' ', ' ', ' ', ' ', '*', ' ', ' ', ' ', ' ', '*'},
                                    {' ', '*', '*', ' ', ' ', '*', ' ', ' ', '*', '*', ' '},
@@ -153,7 +163,7 @@ namespace AirplaneShooterNext
             Audio sp = new Audio();
             sp.enemyshot();
 
-            while (enemyBull.Y < 43)
+            while (enemyBull.Y < 74)
             {
                 Console.ForegroundColor = enemyBull.Color;
                 Console.SetCursorPosition(enemyBull.X, enemyBull.Y);
@@ -224,8 +234,12 @@ namespace AirplaneShooterNext
         public static void BufferSizeTitle()
         {
             Console.Title = "Airplain Shooter";
-            Console.BufferWidth = Console.WindowWidth;
+
+            ConsoleHelper.SetConsoleFont(2);
+            Console.WindowHeight = 78;
+            Console.WindowWidth = 120;
             Console.BufferHeight = Console.WindowHeight;
+            Console.BufferWidth = Console.WindowWidth;
             Console.CursorVisible = false;
         }
 
@@ -245,12 +259,6 @@ namespace AirplaneShooterNext
 
         static void Main()
         {
-
-            ConsoleHelper.SetConsoleFont(2);
-            Console.WindowHeight = 78;
-            Console.WindowWidth = 120;
-            Console.BufferHeight = Console.WindowHeight;
-            Console.BufferWidth = Console.WindowWidth;
             BufferSizeTitle();
             //LittleEnemy testEnemy = new LittleEnemy(20, 10, ConsoleColor.DarkYellow, littleAim);
             //LittleEnemy testEnemy2 = new LittleEnemy(40, 10, ConsoleColor.DarkYellow, littleAim);
