@@ -37,6 +37,17 @@ namespace AirplaneShooterNext
                     AirplaneNext.bullets.Add(bullet);
                     Audio.shot();
                 }
+
+                if (userInput.Key == ConsoleKey.P)
+                {
+                    while (true)
+                    {
+                        if (Console.ReadKey().Key == ConsoleKey.P)
+                        {
+                            break;
+                        }
+                    }
+                }
             }
         }
     }
