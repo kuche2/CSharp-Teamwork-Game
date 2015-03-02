@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Text;
 using System.Threading;
 using AirplainShooterNext;
 using ConsoleExtender;
@@ -290,8 +291,24 @@ namespace AirplaneShooterNext
             Console.WriteLine("Score: {0}", score);
         }
 
+        public static void PrintLifeAndLives(List<char> life, List<char> lives)
+        {
+            Console.SetCursorPosition(90, 15);
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.Write("Life: ");
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.WriteLine(string.Join("", life));
+            Console.SetCursorPosition(90, 20);
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.Write("Lives: ");
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine(string.Join("", lives));
+        }
+
         public static int speed = 0;
         public static int score = 0;
+        public static List<char> life = new List<char>(10) { '|', '|', '|', '|', '|', '|', '|', '|', '|', '|' };
+        public static List<char> lives = new List<char>(3) { '♥', '♥', '♥' };
         
         static void Main()
         {
@@ -299,7 +316,7 @@ namespace AirplaneShooterNext
             SetConsoleCtrlHandler(_handler, true);
 
             ConsoleHelper.SetConsoleFont(2);
-
+            Console.OutputEncoding = Encoding.Unicode;
             new Window();
 
             BufferSizeTitle();
@@ -339,6 +356,7 @@ namespace AirplaneShooterNext
                     }
                 }
                 PrintScore(score);
+                PrintLifeAndLives(life, lives);
                 speed = score/50;
                 Thread.Sleep(50 - speed);
             }
