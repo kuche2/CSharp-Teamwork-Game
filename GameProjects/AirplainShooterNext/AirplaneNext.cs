@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading;
 using AirplainShooterNext;
 using ConsoleExtender;
+using System.Runtime.InteropServices;
 
 namespace AirplaneShooterNext
 {
@@ -15,6 +16,65 @@ namespace AirplaneShooterNext
 
     class AirplaneNext
     {
+        /**
+         * 
+         * Move to another class
+         * 
+         * 
+         */
+
+
+        static bool exitSystem = false;
+
+        #region Trap application termination
+        [DllImport("Kernel32")]
+        private static extern bool SetConsoleCtrlHandler(EventHandler handler, bool add);
+
+        private delegate bool EventHandler(CtrlType sig);
+        static EventHandler _handler;
+
+        enum CtrlType
+        {
+            CTRL_C_EVENT = 0,
+            CTRL_BREAK_EVENT = 1,
+            CTRL_CLOSE_EVENT = 2,
+            CTRL_LOGOFF_EVENT = 5,
+            CTRL_SHUTDOWN_EVENT = 6
+        }
+
+        private static bool Handler(CtrlType sig)
+        {
+            Console.SetCursorPosition(Window.Width-30,0);
+            Console.WriteLine("Bye Bye!");
+
+            //do your cleanup here
+            Thread.Sleep(1000); //simulate some cleanup delay
+
+            Console.SetCursorPosition(Window.Width - 30, 1);
+            Console.WriteLine("Cleanup complete");
+
+            Thread.Sleep(1000); //simulate some cleanup delay
+
+            //allow main to run off
+            exitSystem = true;
+
+            Console.SetCursorPosition(Window.Width - 30, 2);
+            //shutdown right away so there are no lingering threads
+            Environment.Exit(-1);
+
+            return true;
+        }
+        #endregion
+
+
+
+        /**
+         * 
+         * 
+         * 
+         */
+
+
         public static Random randNum = new Random();
 
         public static char[,] airplainEmpty = { {' ', ' ', ' ', ' ', ' ', ' ', ' '},
@@ -189,6 +249,8 @@ namespace AirplaneShooterNext
 
         static void Main()
         {
+            _handler += new EventHandler(Handler);
+            SetConsoleCtrlHandler(_handler, true);
 
             ConsoleHelper.SetConsoleFont(2);
 
