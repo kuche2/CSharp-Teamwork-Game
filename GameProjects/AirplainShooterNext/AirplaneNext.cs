@@ -301,9 +301,9 @@ namespace AirplaneShooterNext
         static void Main()
         {
 
-            ConsoleHelper.SetConsoleFont(1);
+            ConsoleHelper.SetConsoleFont(0);
 
-            Console.WindowHeight = 85;
+            Console.WindowHeight = 70;
             Console.WindowWidth = 120;
             Console.BufferHeight = Console.WindowHeight;
             Console.BufferWidth = Console.WindowWidth;
