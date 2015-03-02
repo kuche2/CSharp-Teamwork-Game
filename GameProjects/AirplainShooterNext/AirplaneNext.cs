@@ -14,7 +14,7 @@ namespace AirplaneShooterNext
         public static int Height = 55;
         public static int Width = 120;
     }
-    
+
 
     class AirplaneNext
     {
@@ -46,7 +46,7 @@ namespace AirplaneShooterNext
 
         private static bool Handler(CtrlType sig)
         {
-            Console.SetCursorPosition(Window.Width-30,0);
+            Console.SetCursorPosition(Window.Width - 30, 0);
             Console.WriteLine("Bye Bye!");
 
             //do your cleanup here
@@ -160,6 +160,7 @@ namespace AirplaneShooterNext
                     Console.WriteLine(' ');
                 }
             }
+            KillHero(enemyBull);
         }
 
         public static void MoveBullet(Bullet bullet)
@@ -237,9 +238,9 @@ namespace AirplaneShooterNext
 
         }
 
-        public static ConsoleColor[] colors = {ConsoleColor.DarkYellow, ConsoleColor.Red, ConsoleColor.Cyan};
+        public static ConsoleColor[] colors = { ConsoleColor.DarkYellow, ConsoleColor.Red, ConsoleColor.Cyan };
 
-        private static void KillEnemy(Bullet bullet)
+        public static void KillEnemy(Bullet bullet)
         {
             for (int i = 0; i < enemies.Count; i++)
             {
@@ -284,6 +285,43 @@ namespace AirplaneShooterNext
             }
         }
 
+        public static void KillHero(EnemyBullet bullet)
+        {
+            if (bullet.Y >= currentAirplainPosY && bullet.Y >= Window.Height - 1 &&
+                    bullet.X >= currentAirplainPosX && bullet.X <= currentAirplainPosX + 8)
+            {
+                if (life.Count > 1)
+                {
+                    life.RemoveAt(0);
+                }
+                else
+                {
+                    if (lives.Count > 0)
+                    {
+                        lives.RemoveAt(0);
+                    }
+                    else
+                    {
+                        GameOver();
+                    }
+                }
+
+                Audio.destroy();
+                bullet.Y = Window.Height - 1;
+                Console.SetCursorPosition(bullet.X, bullet.Y - 1);
+                Console.WriteLine(' ');
+            }
+        }
+
+        private static void GameOver()
+        {
+            Console.SetCursorPosition(60, 30);
+            Console.WriteLine("GAME OVER");
+            Console.WriteLine("Your Score: {0}", score);
+            Console.WriteLine("Press any key to exit");
+            //TO DO
+        }
+
         public static void PrintScore(int score)
         {
             Console.SetCursorPosition(90, 10);
@@ -309,7 +347,7 @@ namespace AirplaneShooterNext
         public static int score = 0;
         public static List<char> life = new List<char>(10) { '|', '|', '|', '|', '|', '|', '|', '|', '|', '|' };
         public static List<char> lives = new List<char>(3) { '♥', '♥', '♥' };
-        
+
         static void Main()
         {
             _handler += new EventHandler(Handler);
@@ -330,7 +368,7 @@ namespace AirplaneShooterNext
 
                 if (enemies.Count == 0)
                 {
-                    CreateLittleEnemies(7, colors[counter%3]);
+                    CreateLittleEnemies(7, colors[counter % 3]);
                     counter++;
                 }
 
@@ -357,7 +395,7 @@ namespace AirplaneShooterNext
                 }
                 PrintScore(score);
                 PrintLifeAndLives(life, lives);
-                speed = score/50;
+                speed = score / 50;
                 Thread.Sleep(50 - speed);
             }
         }
