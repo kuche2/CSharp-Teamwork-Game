@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Threading;
 using AirplainShooterNext;
 using ConsoleExtender;
@@ -176,19 +177,7 @@ namespace AirplaneShooterNext
                     Console.WriteLine(' ');
                 }
             }
-            for (int i = 0; i < enemies.Count; i++)
-            {
-                if (bullet.Y <= enemies[i].Y + 4 && bullet.Y >= enemies[i].Y && bullet.X >= enemies[i].X && bullet.X <= enemies[i].X + 4)
-                {
-                    DrawFigureAtPosition(enemies[i].X, enemies[i].Y, ConsoleColor.DarkYellow, littleAimClear);
-                    enemies.RemoveAt(i);
-                    Audio.destroy();
-                    Console.SetCursorPosition(bullet.X, bullet.Y + 1);
-                    Console.WriteLine(' ');
-                    bullet.Y = 0;
-                    break;
-                }
-            }
+            KillEnemy(bullet);
         }
 
         public static void AirplainMovingLimits()
@@ -237,16 +226,73 @@ namespace AirplaneShooterNext
         public static List<EnemyBullet> enemyBullets = new List<EnemyBullet>();
         public static List<Bullet> bullets = new List<Bullet>();
 
-        public static void CreateLittleEnemies(int number)
+        public static void CreateLittleEnemies(int number, ConsoleColor color)
         {
             for (int i = 1; i <= number; i++)
             {
-                var enemy = new LittleEnemy(i * 8, i % 2 * 10, ConsoleColor.DarkYellow, littleAim);
+                var enemy = new LittleEnemy(i * 8, i % 2 * 10, color, littleAim);
                 enemies.Add(enemy);
             }
 
         }
 
+        public static ConsoleColor[] colors = {ConsoleColor.DarkYellow, ConsoleColor.Red, ConsoleColor.Cyan};
+
+        private static void KillEnemy(Bullet bullet)
+        {
+            for (int i = 0; i < enemies.Count; i++)
+            {
+                if (enemies[i].Color == ConsoleColor.DarkYellow && bullet.Y <= enemies[i].Y + 4 && bullet.Y >= enemies[i].Y &&
+                    bullet.X >= enemies[i].X && bullet.X <= enemies[i].X + 4)
+                {
+                    DrawFigureAtPosition(enemies[i].X, enemies[i].Y, ConsoleColor.DarkYellow, littleAimClear);
+                    enemies.RemoveAt(i);
+                    score += 10;
+                    Audio.destroy();
+                    Console.SetCursorPosition(bullet.X, bullet.Y + 1);
+                    Console.WriteLine(' ');
+                    bullet.Y = 0;
+                    break;
+                }
+                else if (enemies[i].Color == ConsoleColor.Red && bullet.Y <= enemies[i].Y + 4 && bullet.Y >= enemies[i].Y &&
+                    bullet.X >= enemies[i].X && bullet.X <= enemies[i].X + 4)
+                {
+                    enemies[i].Color = ConsoleColor.DarkYellow;
+                    DrawFigureAtPosition(enemies[i].X, enemies[i].Y, enemies[i].Color, littleAim);
+                    //enemies.RemoveAt(i);
+                    score += 10;
+                    Audio.destroy();
+                    Console.SetCursorPosition(bullet.X, bullet.Y + 1);
+                    Console.WriteLine(' ');
+                    bullet.Y = 0;
+                    break;
+                }
+                else if (enemies[i].Color == ConsoleColor.Cyan && bullet.Y <= enemies[i].Y + 4 && bullet.Y >= enemies[i].Y &&
+                    bullet.X >= enemies[i].X && bullet.X <= enemies[i].X + 4)
+                {
+                    enemies[i].Color = ConsoleColor.Red;
+                    DrawFigureAtPosition(enemies[i].X, enemies[i].Y, enemies[i].Color, littleAim);
+                    //enemies.RemoveAt(i);
+                    score += 10;
+                    Audio.destroy();
+                    Console.SetCursorPosition(bullet.X, bullet.Y + 1);
+                    Console.WriteLine(' ');
+                    bullet.Y = 0;
+                    break;
+                }
+            }
+        }
+
+        public static void PrintScore(int score)
+        {
+            Console.SetCursorPosition(90, 10);
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.WriteLine("Score: {0}", score);
+        }
+
+        public static int speed = 0;
+        public static int score = 0;
+        
         static void Main()
         {
             _handler += new EventHandler(Handler);
@@ -258,6 +304,8 @@ namespace AirplaneShooterNext
 
             BufferSizeTitle();
 
+            int counter = 0;
+
             while (true)
             {
                 DrawFigureAtPosition(currentAirplainPosX, currentAirplainPosY, ConsoleColor.DarkGreen, airplain);
@@ -265,7 +313,8 @@ namespace AirplaneShooterNext
 
                 if (enemies.Count == 0)
                 {
-                    CreateLittleEnemies(7);
+                    CreateLittleEnemies(7, colors[counter%3]);
+                    counter++;
                 }
 
                 for (int i = 0; i < enemies.Count; i++)
@@ -289,7 +338,9 @@ namespace AirplaneShooterNext
                         bullets.RemoveAt(i);
                     }
                 }
-                Thread.Sleep(50);
+                PrintScore(score);
+                speed = score/50;
+                Thread.Sleep(50 - speed);
             }
         }
     }

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Threading;
 using AirplaneNext = AirplaneShooterNext.AirplaneNext;
 
 namespace AirplainShooterNext
@@ -32,8 +31,8 @@ namespace AirplainShooterNext
                 case true:
                     if (X > 0)
                     {
-                        AirplaneNext.DrawFigureAtPosition(--X, Y, ConsoleColor.DarkYellow, Shape);
-                        AirplaneNext.DrawFigureAtPosition(X + 5, Y, ConsoleColor.DarkYellow, AirplaneNext.littleAimEmpty);
+                        AirplaneNext.DrawFigureAtPosition(--X, Y, Color, Shape);
+                        AirplaneNext.DrawFigureAtPosition(X + 5, Y, Color, AirplaneNext.littleAimEmpty);
                     }
                     else
                     {
@@ -43,14 +42,14 @@ namespace AirplainShooterNext
                 case false:
                     if (X < 75)
                     {
-                        AirplaneNext.DrawFigureAtPosition(++X, Y, ConsoleColor.DarkYellow, Shape);
+                        AirplaneNext.DrawFigureAtPosition(++X, Y, Color, Shape);
                         if (X > 5)
                         {
-                            AirplaneNext.DrawFigureAtPosition(X - 1, Y, ConsoleColor.DarkYellow, AirplaneNext.littleAimEmpty);
+                            AirplaneNext.DrawFigureAtPosition(X - 1, Y, Color, AirplaneNext.littleAimEmpty);
                         }
                         else
                         {
-                            AirplaneNext.DrawFigureAtPosition(X - 1, Y, ConsoleColor.DarkYellow, AirplaneNext.littleAimEmpty);
+                            AirplaneNext.DrawFigureAtPosition(X - 1, Y, Color, AirplaneNext.littleAimEmpty);
                         }
                     }
                     else
@@ -62,8 +61,8 @@ namespace AirplainShooterNext
             int random = AirplaneNext.randNum.Next(0, 50);
             if (random == 10)
             {
-                AirplaneNext.DrawFigureAtPosition(X, ++Y, ConsoleColor.DarkYellow, Shape);
-                AirplaneNext.DrawFigureAtPosition(X, Y - 1, ConsoleColor.DarkYellow, AirplaneNext.littleAimEmptyTop);
+                AirplaneNext.DrawFigureAtPosition(X, ++Y, Color, Shape);
+                AirplaneNext.DrawFigureAtPosition(X, Y - 1, Color, AirplaneNext.littleAimEmptyTop);
             }
         }
 
