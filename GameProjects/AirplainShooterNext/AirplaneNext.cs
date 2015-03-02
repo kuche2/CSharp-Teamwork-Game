@@ -251,6 +251,7 @@ namespace AirplaneShooterNext
                     enemies.RemoveAt(i);
                     score += 10;
                     Audio.destroy();
+                    GoOnline.kill().Wait();
                     Console.SetCursorPosition(bullet.X, bullet.Y + 1);
                     Console.WriteLine(' ');
                     bullet.Y = 0;
@@ -264,6 +265,7 @@ namespace AirplaneShooterNext
                     //enemies.RemoveAt(i);
                     score += 10;
                     Audio.destroy();
+                    GoOnline.kill().Wait();
                     Console.SetCursorPosition(bullet.X, bullet.Y + 1);
                     Console.WriteLine(' ');
                     bullet.Y = 0;
@@ -277,6 +279,7 @@ namespace AirplaneShooterNext
                     //enemies.RemoveAt(i);
                     score += 10;
                     Audio.destroy();
+                    GoOnline.kill().Wait();
                     Console.SetCursorPosition(bullet.X, bullet.Y + 1);
                     Console.WriteLine(' ');
                     bullet.Y = 0;
@@ -305,7 +308,7 @@ namespace AirplaneShooterNext
                         GameOver();
                     }
                 }
-
+                GoOnline.die().Wait();
                 Audio.destroy();
                 bullet.Y = Window.Height - 1;
                 Console.SetCursorPosition(bullet.X, bullet.Y - 1);
@@ -361,7 +364,7 @@ namespace AirplaneShooterNext
             Console.Write("Enter username: ");
             string username = Console.ReadLine();
             GoOnline.connect(username).Wait();
-
+            Console.Clear();
             int counter = 0;
 
             while (true)

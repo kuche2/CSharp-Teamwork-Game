@@ -19,11 +19,11 @@ namespace AirplainShooterNext
         public DateTime LoggedDate { get; set; }
         public int Score { get; set; }
         public int Killed { get; set; }
-        public int Dies { get; set; }
+        public int Death { get; set; }
         public int RealScore { get; set; }
         public int RealKilled { get; set; }
         public int RealLives { get; set; }
-        public int RealDieds { get; set; }
+        public int RealDeaths { get; set; }
     }
 
     static class GoOnline
@@ -56,14 +56,14 @@ namespace AirplainShooterNext
             }
             LoginUser().Wait();
 
-            Thread.Sleep(20000);
+            Thread.Sleep(3000);
         }
 
         public static async Task CreateUser(string username)
         {
 
             // HTTP POST
-            var Player = new Player() { Name = username, Dies = 0, Killed = 0, RealDieds = 0, RealKilled = 0, RealLives = 3, RealScore = 0, RegisterAt = DateTime.Now, Logged = true, LoggedDate = DateTime.Now, Score = 0 };
+            var Player = new Player() { Name = username, Death = 0, Killed = 0, RealDeaths = 0, RealKilled = 0, RealLives = 3, RealScore = 0, RegisterAt = DateTime.Now, Logged = true, LoggedDate = DateTime.Now, Score = 0 };
             var response = await client.PostAsJsonAsync("api/Players", Player);
             if (response.IsSuccessStatusCode)
             {
@@ -75,6 +75,11 @@ namespace AirplainShooterNext
 
         public static async Task LoginUser()
         {
+            MyData.Logged = true;
+            MyData.RealLives = 3;
+            MyData.RealScore = 0;
+            MyData.RealKilled = 0;
+            MyData.RealDeaths = 0;
             var response = await client.PutAsJsonAsync("api/Players/" + MyData.PlayerID, MyData);
             if (response.IsSuccessStatusCode)
             {
@@ -84,11 +89,31 @@ namespace AirplainShooterNext
                 Console.WriteLine("{0}{1}{2}{3}", MyData.Name.PadRight(20), MyData.Score.ToString().PadRight(20), MyData.RegisterAt, MyData.RealScore);
             }
         }
+
+        public static async Task kill()
+        {
+            MyData.RealScore+=10;
+            MyData.RealKilled++;
+            var response = await client.PutAsJsonAsync("api/Players/" + MyData.PlayerID, MyData);
+        }
+
+        public static async Task die()
+        {
+            MyData.RealDeaths--;
+            var response = await client.PutAsJsonAsync("api/Players/" + MyData.PlayerID, MyData);
+        }
+
         public static async Task disconnect()
         {
             MyData.Logged = false;
+            MyData.Score += MyData.RealScore;
+            MyData.Death += MyData.RealDeaths;
+            MyData.Killed += MyData.RealKilled;
+            MyData.RealDeaths = 0;
+            MyData.RealKilled = 0;
+            MyData.RealLives = 0;
+            MyData.RealScore = 0;
             var response = await client.PutAsJsonAsync("api/Players/" + MyData.PlayerID, MyData);
-            Console.WriteLine(response.StatusCode);
         }
     }
 }
