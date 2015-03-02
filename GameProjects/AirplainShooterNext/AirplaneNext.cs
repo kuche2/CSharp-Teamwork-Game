@@ -54,7 +54,7 @@ namespace AirplaneShooterNext
 
             Console.SetCursorPosition(Window.Width - 30, 1);
             Console.WriteLine("Cleanup complete");
-
+            GoOnline.disconnect().Wait();
             Thread.Sleep(1000); //simulate some cleanup delay
 
             //allow main to run off
@@ -358,6 +358,9 @@ namespace AirplaneShooterNext
             new Window();
 
             BufferSizeTitle();
+            Console.Write("Enter username: ");
+            string username = Console.ReadLine();
+            GoOnline.connect(username).Wait();
 
             int counter = 0;
 
