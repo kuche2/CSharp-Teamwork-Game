@@ -131,50 +131,6 @@ namespace AirplaneShooterNext
             }
         }
 
-        //public static void Shooting(int x, int y, ConsoleColor color, char bulletChar)
-        //{
-        //    Bullet playerBull = new Bullet();
-        //    playerBull.X = x;
-        //    playerBull.Y = y;
-        //    playerBull.Color = color;
-        //    playerBull.Bullets = bulletChar;
-
-        //    while (playerBull.Y >= 0)
-        //    {
-        //        Console.ForegroundColor = playerBull.Color;
-        //        Console.SetCursorPosition(playerBull.X, playerBull.Y);
-        //        Console.WriteLine(playerBull.Bullets);
-        //        playerBull.Y--;
-        //        for (int i = 0; i < enemies.Count; i++)
-        //        {
-        //            if (playerBull.Y == enemies[i].Y + 3 && playerBull.X >= enemies[i].X && playerBull.X <= enemies[i].X + 4)
-        //            {
-        //                DrawFigureAtPosition(enemies[i].X, enemies[i].Y, ConsoleColor.DarkYellow, littleAimClear);
-        //                enemies.RemoveAt(i);
-        //                playerBull.Y = 0;
-        //                break;
-        //            }
-        //        }
-        //    }
-        //}
-
-        //public static void EnemyShooting(int x, int y, ConsoleColor color, char bulletChar)
-        //{
-        //    EnemyBullet enemyBull = new EnemyBullet();
-        //    enemyBull.X = x;
-        //    enemyBull.Y = y;
-        //    enemyBull.Color = color;
-        //    enemyBull.Bullets = bulletChar;
-
-        //    //if (enemyBull.Y < 43)
-        //    //{
-        //    //    Console.ForegroundColor = enemyBull.Color;
-        //    //    Console.SetCursorPosition(enemyBull.X, enemyBull.Y);
-        //    //    Console.WriteLine(enemyBull.Bullets);
-        //    //    enemyBull.Y++;
-        //    //}
-        //}
-
         public static void AirplainMovingLimits()
         {
             if (currentAirplainPosX == 0)
@@ -187,36 +143,6 @@ namespace AirplaneShooterNext
                 DrawFigureAtPosition(currentAirplainPosX, currentAirplainPosY, ConsoleColor.Black, airplainEmpty);
                 currentAirplainPosX -= 1;
             }
-        }
-
-        public static void EnemiesFigureConfiguration2()
-        {
-            DrawFigureAtPosition(currentBigAimPosX, currentBigAimPosY + 2, ConsoleColor.DarkRed, bigAim);
-
-            DrawFigureAtPosition(currentLittleAimPosX - 3, currentLittleAimPosY, ConsoleColor.DarkYellow, littleAim);
-            DrawFigureAtPosition(currentLittleAimPosX - 13, currentLittleAimPosY + 7, ConsoleColor.DarkYellow, littleAim);
-            DrawFigureAtPosition(currentLittleAimPosX - 3, currentLittleAimPosY + 13, ConsoleColor.DarkYellow, littleAim);
-
-            DrawFigureAtPosition(currentLittleAimPosX + 34, currentLittleAimPosY, ConsoleColor.DarkYellow, littleAim);
-            DrawFigureAtPosition(currentLittleAimPosX + 44, currentLittleAimPosY + 7, ConsoleColor.DarkYellow, littleAim);
-            DrawFigureAtPosition(currentLittleAimPosX + 34, currentLittleAimPosY + 13, ConsoleColor.DarkYellow, littleAim);
-
-            DrawFigureAtPosition(currentLittleAimPosX + 16, currentLittleAimPosY + 13, ConsoleColor.DarkYellow, littleAim);
-        }
-
-        public static void EnemiesFigureConfiguration1()
-        {
-            DrawFigureAtPosition(currentBigAimPosX, currentBigAimPosY + 3, ConsoleColor.DarkRed, bigAim);
-
-            DrawFigureAtPosition(currentLittleAimPosX, currentLittleAimPosY, ConsoleColor.DarkYellow, littleAim);
-            DrawFigureAtPosition(currentLittleAimPosX - 10, currentLittleAimPosY + 7, ConsoleColor.DarkYellow, littleAim);
-            DrawFigureAtPosition(currentLittleAimPosX, currentLittleAimPosY + 13, ConsoleColor.DarkYellow, littleAim);
-
-            DrawFigureAtPosition(currentLittleAimPosX + 31, currentLittleAimPosY, ConsoleColor.DarkYellow, littleAim);
-            DrawFigureAtPosition(currentLittleAimPosX + 40, currentLittleAimPosY + 7, ConsoleColor.DarkYellow, littleAim);
-            DrawFigureAtPosition(currentLittleAimPosX + 31, currentLittleAimPosY + 13, ConsoleColor.DarkYellow, littleAim);
-
-            DrawFigureAtPosition(currentLittleAimPosX + 16, currentLittleAimPosY + 15, ConsoleColor.DarkYellow, littleAim);
         }
 
         public static void DrawFigureAtPosition(int x, int y, ConsoleColor color, char[,] figure)
@@ -274,7 +200,7 @@ namespace AirplaneShooterNext
             {
                 DrawFigureAtPosition(currentAirplainPosX, currentAirplainPosY, ConsoleColor.DarkGreen, airplain);
                 Hero.UserAiplainKeysOptions();
-                //EnemiesFigureConfiguration1();
+
                 if (enemies.Count == 0)
                 {
                     CreateLittleEnemies(7);
@@ -302,17 +228,6 @@ namespace AirplaneShooterNext
                     }
                 }
                 Thread.Sleep(50);
-                //RandomEnemies shooting();
-
-                //AirplainDyingConditions();
-
-                //EnemiesDyingConditions();
-
-                //RandomFallingBonus();
-
-                //Scoring();         //Speed
-
-                //Interface:  Wellcome, Rules of the game - .txt, Sounds, Levels changing - story of each level ???, Bye Bye
             }
         }
     }
