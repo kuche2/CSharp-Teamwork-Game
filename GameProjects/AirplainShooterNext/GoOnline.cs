@@ -37,7 +37,7 @@ namespace AirplainShooterNext
             client.BaseAddress = new Uri("http://game.igergov.com/");
             client.DefaultRequestHeaders.Accept.Clear();
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-            HttpResponseMessage response = await client.GetAsync("api/Players/"+username);
+            HttpResponseMessage response = await client.GetAsync("api/Players/" + username);
             if (response.IsSuccessStatusCode)
             {
                 Player Player = await response.Content.ReadAsAsync<Player>();
@@ -90,10 +90,10 @@ namespace AirplainShooterNext
             }
         }
 
-        public static async Task kill()
+        public static async Task kill(int score, int killed)
         {
-            MyData.RealScore+=10;
-            MyData.RealKilled++;
+            MyData.RealScore = score;
+            MyData.RealKilled += killed;
             var response = await client.PutAsJsonAsync("api/Players/" + MyData.PlayerID, MyData);
         }
 

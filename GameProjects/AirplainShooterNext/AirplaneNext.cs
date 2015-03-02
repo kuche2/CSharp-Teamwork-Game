@@ -230,6 +230,7 @@ namespace AirplaneShooterNext
 
         public static void CreateLittleEnemies(int number, ConsoleColor color)
         {
+            GoOnline.kill(score, number).Wait();
             for (int i = 1; i <= number; i++)
             {
                 var enemy = new LittleEnemy(i * 8, i % 2 * 10, color, littleAim);
@@ -251,7 +252,6 @@ namespace AirplaneShooterNext
                     enemies.RemoveAt(i);
                     score += 10;
                     Audio.destroy();
-                    GoOnline.kill().Wait();
                     Console.SetCursorPosition(bullet.X, bullet.Y + 1);
                     Console.WriteLine(' ');
                     bullet.Y = 0;
@@ -265,7 +265,6 @@ namespace AirplaneShooterNext
                     //enemies.RemoveAt(i);
                     score += 10;
                     Audio.destroy();
-                    GoOnline.kill().Wait();
                     Console.SetCursorPosition(bullet.X, bullet.Y + 1);
                     Console.WriteLine(' ');
                     bullet.Y = 0;
@@ -279,7 +278,6 @@ namespace AirplaneShooterNext
                     //enemies.RemoveAt(i);
                     score += 10;
                     Audio.destroy();
-                    GoOnline.kill().Wait();
                     Console.SetCursorPosition(bullet.X, bullet.Y + 1);
                     Console.WriteLine(' ');
                     bullet.Y = 0;
