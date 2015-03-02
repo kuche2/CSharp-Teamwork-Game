@@ -6,6 +6,11 @@ using ConsoleExtender;
 
 namespace AirplaneShooterNext
 {
+    public class Window
+    {
+        public static int Height = 55;
+        public static int Width = 120;
+    }
     public class Hero
     {
         public static void UserAiplainKeysOptions()
@@ -65,8 +70,8 @@ namespace AirplaneShooterNext
                                      {' ', ' ', '*', 'o', '*', ' ', ' '},
                                      {'*', '*', '|', '*', '|', '*', '*'},
                                      {' ', 'v', '*', '^', '*', 'v', ' '}  };
-        public static int currentAirplainPosX = Console.WindowWidth / 2 - airplain.GetLength(0);
-        public static int currentAirplainPosY = Console.WindowHeight - airplain.GetLength(1) + 2;
+        public static int currentAirplainPosX = Window.Width / 2 - airplain.GetLength(0);
+        public static int currentAirplainPosY = Window.Height - airplain.GetLength(1) + 2;
 
         public static char[,] bigAim = {  {'*', ' ', ' ', ' ', ' ', '*', ' ', ' ', ' ', ' ', '*'},
                                    {' ', '*', '*', ' ', ' ', '*', ' ', ' ', '*', '*', ' '},
@@ -74,7 +79,7 @@ namespace AirplaneShooterNext
                                    {' ', ' ', ' ', '*', '*', 'v', '*', '*', ' ', ' ', ' '},
                                    {' ', '*', '*', ' ', ' ', '*', ' ', ' ', '*', '*', ' '},
                                    {'*', ' ', ' ', ' ', ' ', 'V', ' ', ' ', ' ', ' ', '*'}  };
-        public static int currentBigAimPosX = Console.WindowWidth / 2 - bigAim.GetLength(0);
+        public static int currentBigAimPosX = Window.Width / 2 - bigAim.GetLength(0);
         public static int currentBigAimPosY = bigAim.GetLength(0) - 2;
 
         public static char[,] littleAim = {  {'*', ' ', '*', ' ', '*'},
@@ -118,12 +123,12 @@ namespace AirplaneShooterNext
                 this.Y = y;
                 this.Color = color;
                 this.Bullets = bull;
-            }  
+            }
         }
 
         public static void MoveEnemyBullet(EnemyBullet enemyBull)
         {
-            if (enemyBull.Y < Console.WindowHeight - 1)
+            if (enemyBull.Y < Window.Height - 1)
             {
                 Console.ForegroundColor = enemyBull.Color;
                 Console.SetCursorPosition(enemyBull.X, enemyBull.Y);
@@ -131,14 +136,14 @@ namespace AirplaneShooterNext
                 enemyBull.Y++;
                 Console.SetCursorPosition(enemyBull.X, enemyBull.Y - 2);
                 Console.WriteLine(' ');
-                if (enemyBull.Y == Console.WindowHeight - 1)
+                if (enemyBull.Y == Window.Height - 1)
                 {
                     Console.SetCursorPosition(enemyBull.X, enemyBull.Y - 1);
                     Console.WriteLine(' ');
                 }
             }
         }
-        
+
         public static void MoveBullet(Bullet bullet)
         {
             if (bullet.Y >= 0)
@@ -221,7 +226,7 @@ namespace AirplaneShooterNext
                 DrawFigureAtPosition(currentAirplainPosX, currentAirplainPosY, ConsoleColor.Black, airplainEmpty);
                 currentAirplainPosX += 1;
             }
-            if (currentAirplainPosX == Console.WindowWidth - 8)
+            if (currentAirplainPosX == Window.Width - 8)
             {
                 DrawFigureAtPosition(currentAirplainPosX, currentAirplainPosY, ConsoleColor.Black, airplainEmpty);
                 currentAirplainPosX -= 1;
@@ -276,8 +281,10 @@ namespace AirplaneShooterNext
         public static void BufferSizeTitle()
         {
             Console.Title = "Airplain Shooter";
-            Console.BufferWidth = Console.WindowWidth;
+            Console.WindowHeight = Window.Height;
+            Console.WindowWidth = Window.Width;
             Console.BufferHeight = Console.WindowHeight;
+            Console.BufferWidth = Console.WindowWidth;
             Console.CursorVisible = false;
         }
 
@@ -301,14 +308,12 @@ namespace AirplaneShooterNext
         static void Main()
         {
 
-            ConsoleHelper.SetConsoleFont(0);
+            ConsoleHelper.SetConsoleFont(2);
 
-            Console.WindowHeight = 70;
-            Console.WindowWidth = 120;
-            Console.BufferHeight = Console.WindowHeight;
-            Console.BufferWidth = Console.WindowWidth;
+            new Window();
+
             BufferSizeTitle();
-            
+
             while (true)
             {
                 DrawFigureAtPosition(currentAirplainPosX, currentAirplainPosY, ConsoleColor.DarkGreen, airplain);
@@ -318,7 +323,7 @@ namespace AirplaneShooterNext
                 {
                     CreateLittleEnemies(7);
                 }
-                
+
                 for (int i = 0; i < enemies.Count; i++)
                 {
                     enemies[i].Move();
@@ -327,7 +332,7 @@ namespace AirplaneShooterNext
                 for (int i = 0; i < enemyBullets.Count; i++)
                 {
                     MoveEnemyBullet(enemyBullets[i]);
-                    if (enemyBullets[i].Y == Console.WindowHeight - 1)
+                    if (enemyBullets[i].Y == Window.Height - 1)
                     {
                         enemyBullets.RemoveAt(i);
                     }
