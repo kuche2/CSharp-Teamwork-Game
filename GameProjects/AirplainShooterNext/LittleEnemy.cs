@@ -74,6 +74,7 @@ namespace AirplainShooterNext
             {
                 AirplaneNext.EnemyBullet enemyBull = new AirplaneNext.EnemyBullet(X + 2, Y + 3, ConsoleColor.White, 'Y');
                 AirplaneNext.enemyBullets.Add(enemyBull);
+                Audio.enemyshot();
             }
         }
     }

@@ -35,6 +35,7 @@ namespace AirplaneShooterNext
                 {
                     AirplaneNext.Bullet bullet = new AirplaneNext.Bullet(AirplaneNext.currentAirplainPosX + 3, AirplaneNext.currentAirplainPosY + 1, ConsoleColor.Magenta, '^');
                     AirplaneNext.bullets.Add(bullet);
+                    Audio.shot();
                 }
             }
         }
@@ -149,6 +150,7 @@ namespace AirplaneShooterNext
                 {
                     DrawFigureAtPosition(enemies[i].X, enemies[i].Y, ConsoleColor.DarkYellow, littleAimClear);
                     enemies.RemoveAt(i);
+                    Audio.destroy();
                     Console.SetCursorPosition(bullet.X, bullet.Y + 1);
                     Console.WriteLine(' ');
                     bullet.Y = 0;

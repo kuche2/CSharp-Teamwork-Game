@@ -10,17 +10,17 @@ namespace AirplainShooterNext
 {
     public class Audio
     {
-        public void shot()
+        public static void shot()
         {
             SoundPlayer sp = new SoundPlayer("../../Audio/Laser.wav");
             sp.Play();
         }
-        public void enemyshot()
+        public static void enemyshot()
         {
             SoundPlayer sp = new SoundPlayer("../../Audio/Laser.wav");
             sp.Play();
         }
-        public void destroy()
+        public static void destroy()
         {
             SoundPlayer sp = new SoundPlayer("../../Audio/Laser.wav");
             sp.Play();
