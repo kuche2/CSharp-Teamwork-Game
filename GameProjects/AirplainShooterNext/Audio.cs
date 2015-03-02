@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Media;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Media;
+
 
 namespace AirplainShooterNext
 {
@@ -17,12 +12,12 @@ namespace AirplainShooterNext
         }
         public static void enemyshot()
         {
-            SoundPlayer sp = new SoundPlayer("../../Audio/Laser.wav");
+            SoundPlayer sp = new SoundPlayer("../../Audio/AlienLasser.wav");
             sp.Play();
         }
         public static void destroy()
         {
-            SoundPlayer sp = new SoundPlayer("../../Audio/Laser.wav");
+            SoundPlayer sp = new SoundPlayer("../../Audio/Explode.wav");
             sp.Play();
         }
     }
