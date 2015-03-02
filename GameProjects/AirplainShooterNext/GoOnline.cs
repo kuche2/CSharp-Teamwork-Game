@@ -55,6 +55,8 @@ namespace AirplainShooterNext
                 CreateUser(username).Wait();
             }
             LoginUser().Wait();
+
+            Thread.Sleep(20000);
         }
 
         public static async Task CreateUser(string username)
@@ -79,7 +81,7 @@ namespace AirplainShooterNext
                 Console.Clear();
                 Console.WriteLine("You are logged in!");
                 Console.WriteLine("{0}{1}{2}", "Username".PadRight(20), "Score".PadRight(20), "Registered at");
-                Console.WriteLine("{0}{1}{2}", MyData.Name.PadRight(20), MyData.Score.ToString().PadRight(20), MyData.RegisterAt);
+                Console.WriteLine("{0}{1}{2}{3}", MyData.Name.PadRight(20), MyData.Score.ToString().PadRight(20), MyData.RegisterAt, MyData.RealScore);
             }
         }
         public static async Task disconnect()
