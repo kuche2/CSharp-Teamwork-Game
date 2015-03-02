@@ -11,12 +11,8 @@ namespace AirplainShooterNext
         private ConsoleColor color;
 
 
-        public char[,] Shape = {  
-                                {'*', ' ', '*', ' ', '*'},
-                                {' ', '*', '*', '*', ' '},
-                                {' ', '*', 'o', '*', ' '},
-                                {'*', ' ', 'V', ' ', '*'}  
-                               };
+        public char[,] Shape { get; set; }
+
         public  int X { get; set; }
         public  int Y { get; set; }
         public  ConsoleColor Color { get; set; }
@@ -63,16 +59,21 @@ namespace AirplainShooterNext
                     }
                     break;
             }
+            int random = AirplaneNext.randNum.Next(0, 50);
+            if (random == 10)
+            {
+                AirplaneNext.DrawFigureAtPosition(X, ++Y, ConsoleColor.DarkYellow, Shape);
+                AirplaneNext.DrawFigureAtPosition(X, Y - 1, ConsoleColor.DarkYellow, AirplaneNext.littleAimEmptyTop);
+            }
         }
 
         public void Shoot()
         {
-            int random = AirplaneNext.randNum.Next(0, 20);
+            int random = AirplaneNext.randNum.Next(0, 30);
             if (random == 10)
             {
-                AirplaneNext.EnemyShooting(X + 2, Y + 3, ConsoleColor.White, 'Y');
-                Thread.Sleep(50);
-                AirplaneNext.EnemyShooting(X + 2, Y + 2, ConsoleColor.White, ' ');    
+                AirplaneNext.EnemyBullet enemyBull = new AirplaneNext.EnemyBullet(X + 2, Y + 3, ConsoleColor.White, 'Y');
+                AirplaneNext.enemyBullets.Add(enemyBull);
             }
         }
     }
