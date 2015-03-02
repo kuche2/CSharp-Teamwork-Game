@@ -99,7 +99,8 @@ namespace AirplainShooterNext
 
         public static async Task die()
         {
-            MyData.RealDeaths--;
+            MyData.RealDeaths++;
+            MyData.RealLives--;
             var response = await client.PutAsJsonAsync("api/Players/" + MyData.PlayerID, MyData);
         }
 
