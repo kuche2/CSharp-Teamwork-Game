@@ -146,7 +146,7 @@ namespace AirplaneShooterNext
             }
             for (int i = 0; i < enemies.Count; i++)
             {
-                if (bullet.Y == enemies[i].Y + 4 && bullet.X >= enemies[i].X && bullet.X <= enemies[i].X + 4)
+                if (bullet.Y <= enemies[i].Y + 4 && bullet.Y >= enemies[i].Y && bullet.X >= enemies[i].X && bullet.X <= enemies[i].X + 4)
                 {
                     DrawFigureAtPosition(enemies[i].X, enemies[i].Y, ConsoleColor.DarkYellow, littleAimClear);
                     enemies.RemoveAt(i);
