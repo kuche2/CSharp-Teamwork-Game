@@ -182,7 +182,7 @@ namespace AirplaneShooterNext
                 DrawFigureAtPosition(currentAirplainPosX, currentAirplainPosY, ConsoleColor.Black, airplainEmpty);
                 currentAirplainPosX += 1;
             }
-            if (currentAirplainPosX == Window.Width - 8)
+            if (currentAirplainPosX == Window.Width - 48)
             {
                 DrawFigureAtPosition(currentAirplainPosX, currentAirplainPosY, ConsoleColor.Black, airplainEmpty);
                 currentAirplainPosX -= 1;
