@@ -67,6 +67,15 @@
     <Content Include="Audio\AlienLasser.wav" />
     <Content Include="Audio\Explode.wav" />
     <Content Include="Audio\Laser.wav" />
+    <Content Include="level1.txt" />
+    <Content Include="level2.txt" />
+    <Content Include="level3.txt" />
+    <Content Include="level4.txt" />
+    <Content Include="level5.txt" />
+    <Content Include="level6.txt" />
+    <Content Include="level7.txt" />
+    <Content Include="level8.txt" />
+    <Content Include="level9.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

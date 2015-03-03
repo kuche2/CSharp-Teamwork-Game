@@ -80,8 +80,7 @@ namespace AirplaneShooterNext
         public static Random randNum = new Random();
 
 
-        public static List<string> levelPaths = new List<string>() 
-        { "..\\..\\level1.txt", "..\\..\\level2.txt", "..\\..\\level3.txt", "..\\..\\level4.txt", "..\\..\\level5.txt" };
+        public static List<string> levelPaths = new List<string>() { "..\\..\\level1.txt", "..\\..\\level2.txt", "..\\..\\level3.txt", "..\\..\\level4.txt", "..\\..\\level5.txt", "..\\..\\level6.txt", "..\\..\\level7.txt", "..\\..\\level8.txt", "..\\..\\level9.txt" };
 
 
         public static char[,] airplainEmpty = { {' ', ' ', ' ', ' ', ' ', ' ', ' '},
@@ -461,7 +460,7 @@ namespace AirplaneShooterNext
             _handler += new EventHandler(Handler);
             SetConsoleCtrlHandler(_handler, true);
 
-            ConsoleHelper.SetConsoleFont(8);
+            ConsoleHelper.SetConsoleFont(2);
             Console.OutputEncoding = Encoding.Unicode;
             new Window();
 
