@@ -77,7 +77,6 @@ namespace AirplaneShooterNext
          * 
          */
 
-
         public static Random randNum = new Random();
 
         public static char[,] airplainEmpty = { {' ', ' ', ' ', ' ', ' ', ' ', ' '},
@@ -303,40 +302,34 @@ namespace AirplaneShooterNext
             }
         }
 
-        public static void KillHero(EnemyBullet bullet)
+        public static bool KillHero(EnemyBullet bullet)
         {
+            bool hit = false;
             if (bullet.Y >= currentAirplainPosY && bullet.Y >= Window.Height - 1 &&
                     bullet.X >= currentAirplainPosX && bullet.X <= currentAirplainPosX + 8)
             {
-                if (life.Count > 1)
-                {
-                    life.RemoveAt(0);
-                }
-                else
-                {
-                    if (lives.Count > 0)
-                    {
-                        lives.RemoveAt(0);
-                    }
-                    else
-                    {
-                        GameOver();
-                    }
-                }
+                hit = true;
                 GoOnline.die().Wait();
                 Audio.destroy();
                 bullet.Y = Window.Height - 1;
                 Console.SetCursorPosition(bullet.X, bullet.Y - 1);
                 Console.WriteLine(' ');
             }
+            return hit;
         }
 
         private static void GameOver()
         {
             Console.SetCursorPosition(60, 30);
             Console.WriteLine("GAME OVER");
+            Console.SetCursorPosition(60, 31);
             Console.WriteLine("Your Score: {0}", score);
+            Console.SetCursorPosition(60, 32);
             Console.WriteLine("Press any key to exit");
+            while (true)
+            {
+                Console.ReadKey();
+            }
             //TO DO
         }
 
@@ -347,39 +340,56 @@ namespace AirplaneShooterNext
             Console.WriteLine("Score: {0}", score);
         }
 
-        public static void PrintLifeAndLives(List<char> life, List<char> lives)
+        public static void PrintLifeAndLives(int life)
         {
             Console.SetCursorPosition(90, 15);
             Console.ForegroundColor = ConsoleColor.White;
             Console.Write("Blood: ");
             Console.ForegroundColor = ConsoleColor.Green;
-            Console.WriteLine(string.Join("", life));
+            Console.WriteLine(new string(' ', 10));
+            Console.SetCursorPosition(97, 15);
+            if (life%10 != 0)
+            {
+                Console.WriteLine(new string('|', life % 10));
+            }
+            else if (life>0)
+            {
+                Console.WriteLine(new string('|', 10));
+            }
             Console.SetCursorPosition(90, 20);
             Console.ForegroundColor = ConsoleColor.White;
             Console.Write("Lives: ");
             Console.ForegroundColor = ConsoleColor.Red;
-            Console.WriteLine(string.Join("", lives));
+            Console.WriteLine(new string(' ', 3));
+            Console.SetCursorPosition(97, 20);
+            if (life < 30 && life > 0 && life%10 != 0)
+            {
+                Console.WriteLine(new string('♥', life / 10 + 1));    
+            }
+            else
+            {
+                Console.WriteLine(new string('♥', life / 10));
+            }
         }
 
         public static int speed = 0;
         public static int score = 0;
-        public static List<char> life = new List<char>(10) { '|', '|', '|', '|', '|', '|', '|', '|', '|', '|' };
-        public static List<char> lives = new List<char>(3) { '♥', '♥', '♥' };
 
         static void Main()
         {
             _handler += new EventHandler(Handler);
             SetConsoleCtrlHandler(_handler, true);
 
-            ConsoleHelper.SetConsoleFont(8);
+            ConsoleHelper.SetConsoleFont(2);
             Console.OutputEncoding = Encoding.Unicode;
             new Window();
 
             BufferSizeTitle();
-            Story();
-            
+            //Story();
+
             Console.Write("Enter username: ");
             string username = Console.ReadLine();
+
             while (true)
             {
                 if (username.Length == 0 || username.Length > 20)
@@ -395,6 +405,7 @@ namespace AirplaneShooterNext
             }
 
             int counter = 0;
+            int life = 30;
 
             while (true)
             {
@@ -415,6 +426,15 @@ namespace AirplaneShooterNext
                 for (int i = 0; i < enemyBullets.Count; i++)
                 {
                     MoveEnemyBullet(enemyBullets[i]);
+                    if (KillHero(enemyBullets[i]))
+                    {
+                        life--;
+                        if (life <= 0)
+                        {
+                            PrintLifeAndLives(0);
+                            GameOver();
+                        }
+                    }
                     if (enemyBullets[i].Y == Window.Height - 1)
                     {
                         enemyBullets.RemoveAt(i);
@@ -429,7 +449,7 @@ namespace AirplaneShooterNext
                     }
                 }
                 PrintScore(score);
-                PrintLifeAndLives(life, lives);
+                PrintLifeAndLives(life);
                 speed = score / 50;
                 Thread.Sleep(50 - speed);
             }
