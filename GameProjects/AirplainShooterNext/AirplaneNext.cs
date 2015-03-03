@@ -213,28 +213,12 @@ namespace AirplaneShooterNext
 
         public static void BufferSizeTitle()
         {
-            Console.Title = "Airplain Shooter";
+            Console.Title = "Spider Invaders Killer";
             Console.WindowHeight = Window.Height;
             Console.WindowWidth = Window.Width;
             Console.BufferHeight = Console.WindowHeight;
             Console.BufferWidth = Console.WindowWidth;
             Console.CursorVisible = false;
-        }
-
-        public static void Story()
-        {
-            StreamReader sr = new StreamReader("Story.txt");
-            string line = sr.ReadLine();
-            while (line != null)
-            {
-                Console.WriteLine(line);
-                line = sr.ReadLine();
-            }
-            sr.Close();
-            Console.WriteLine();
-            Console.WriteLine("Press a key...");
-            Console.ReadLine();
-            Console.Clear();
         }
 
         public static bool goLeft = true;
@@ -374,6 +358,7 @@ namespace AirplaneShooterNext
         public static int speed = 0;
         public static int score = 0;
         public static bool isOnline = false;
+
         static void Main()
         {
             _handler += new EventHandler(Handler);
@@ -384,33 +369,35 @@ namespace AirplaneShooterNext
             new Window();
 
             BufferSizeTitle();
-            //Story();
 
-            Console.Write("Enter username: ");
-            string username = Console.ReadLine();
-            Console.WriteLine("Do you want to get online stats? Press (Y)es or another key for NO");
-            if(Console.ReadKey().Key == ConsoleKey.Y)
-            {
-                isOnline = true;
-            }
-            else
-            {
-                isOnline = false;
-            }
+            Story();
             while (true)
             {
+                Console.Write("Enter username: ");
+                string username = Console.ReadLine();
+
                 if (username.Length == 0 || username.Length > 20)
                 {
                     Exceptions(username);
                 }
                 else
                 {
+
+                    Console.WriteLine("Press any key to continue ...");
+                    if (Console.ReadKey().Key == ConsoleKey.Y)
+                    {
+                        isOnline = true;
+                    }
+                    else
+                    {
+                        isOnline = false;
+                    }
+
                     GoOnline.connect(username).Wait();
                     Console.Clear();
                     break;
                 }
             }
-
             int counter = 0;
             int life = 30;
 
@@ -469,14 +456,43 @@ namespace AirplaneShooterNext
 
         public static void Exceptions(string username)
         {
-            if (username.Length == 0)
+            try
             {
-                throw new ArgumentNullException("Please, enter your name.");
+                bool usenameIsCorrect = username.Length != 0 || username.Length <= 20;
             }
-            else if (username.Length > 20)
+            catch (ArgumentNullException)
             {
-                throw new ApplicationException("Too long name.");
+                throw new ArgumentNullException("Username could not be empty!");
+                throw;
             }
+            catch (ApplicationException)
+            {
+                throw new ApplicationException("Too long username.");
+                throw;
+            }
+            finally
+            {
+                Console.WriteLine("Uncorrect username! Please, enter a correct username.");
+            }
+        }
+
+        public static void Story()
+        {
+            StreamReader sr = new StreamReader("..\\..\\story.txt");
+            string line = sr.ReadLine();
+           
+            while (line != null)
+            {
+                Console.ForegroundColor = ConsoleColor.DarkGreen;
+                Console.WriteLine(line);
+                line = sr.ReadLine();
+            }
+            sr.Close();
+            Console.WriteLine();
+            Console.WriteLine();
+            Console.WriteLine("Press any key to continue ...");
+            ConsoleKeyInfo userInput = Console.ReadKey();
+            Console.Clear();
         }
     }
 }
