@@ -79,6 +79,11 @@ namespace AirplaneShooterNext
 
         public static Random randNum = new Random();
 
+
+        public static List<string> levelPaths = new List<string>() 
+        { "..\\..\\level1.txt", "..\\..\\level2.txt", "..\\..\\level3.txt", "..\\..\\level4.txt", "..\\..\\level5.txt" };
+
+
         public static char[,] airplainEmpty = { {' ', ' ', ' ', ' ', ' ', ' ', ' '},
                                          {' ', ' ', ' ', ' ', ' ', ' ', ' '},
                                          {' ', ' ', ' ', ' ', ' ', ' ', ' '},
@@ -230,6 +235,7 @@ namespace AirplaneShooterNext
 
         public static void CreateLittleEnemies(int number, ConsoleColor color)
         {
+            Level(levelPaths[counter]);
             GoOnline.kill(score, number).Wait();
             for (int i = 1; i <= number; i++)
             {
@@ -331,11 +337,11 @@ namespace AirplaneShooterNext
             Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine(new string(' ', 10));
             Console.SetCursorPosition(97, 15);
-            if (life%10 != 0)
+            if (life % 10 != 0)
             {
                 Console.WriteLine(new string('|', life % 10));
             }
-            else if (life>0)
+            else if (life > 0)
             {
                 Console.WriteLine(new string('|', 10));
             }
@@ -345,9 +351,9 @@ namespace AirplaneShooterNext
             Console.ForegroundColor = ConsoleColor.Red;
             Console.WriteLine(new string(' ', 3));
             Console.SetCursorPosition(97, 20);
-            if (life < 30 && life > 0 && life%10 != 0)
+            if (life < 30 && life > 0 && life % 10 != 0)
             {
-                Console.WriteLine(new string('♥', life / 10 + 1));    
+                Console.WriteLine(new string('♥', life / 10 + 1));
             }
             else
             {
@@ -359,18 +365,68 @@ namespace AirplaneShooterNext
         public static int score = 0;
         public static bool isOnline = false;
 
-        static void Main()
+        public static void Exceptions(string username)
         {
-            _handler += new EventHandler(Handler);
-            SetConsoleCtrlHandler(_handler, true);
+            try
+            {
+                bool usenameIsCorrect = username.Length != 0 || username.Length <= 20;
+            }
+            catch (ArgumentNullException)
+            {
+                throw new ArgumentNullException("Username could not be empty!");
+                throw;
+            }
+            catch (ApplicationException)
+            {
+                throw new ApplicationException("Too long username.");
+                throw;
+            }
+            finally
+            {
+                Console.WriteLine("Uncorrect username!");
+            }
+        }
 
-            ConsoleHelper.SetConsoleFont(2);
-            Console.OutputEncoding = Encoding.Unicode;
-            new Window();
+        public static void Story()
+        {
+            StreamReader sr = new StreamReader("..\\..\\story.txt");
+            string line = sr.ReadLine();
 
-            BufferSizeTitle();
+            while (line != null)
+            {
+                Console.ForegroundColor = ConsoleColor.DarkGreen;
+                Console.WriteLine(line);
+                line = sr.ReadLine();
+            }
+            sr.Close();
+            Console.WriteLine();
+            Console.WriteLine();
+            Console.WriteLine("Press any key to continue ...");
+            ConsoleKeyInfo userInput = Console.ReadKey();
+            Console.Clear();
+        }
 
-            Story();
+        public static void Level(string levelpath)
+        {
+            Console.Clear();
+            StreamReader sr = new StreamReader(levelpath);
+            string line = sr.ReadLine();
+            int p = Console.WindowHeight / 2 - 5;
+            while (line != null)
+            {
+                Console.SetCursorPosition(Console.WindowWidth / 2 - 19, p);
+                Console.ForegroundColor = ConsoleColor.DarkGreen;
+                Console.WriteLine(line);
+                line = sr.ReadLine();
+                p++;
+            }
+            sr.Close();
+            Thread.Sleep(3000);
+            Console.Clear();
+        }
+
+        public static void Username() 
+        {
             while (true)
             {
                 Console.Write("Enter username: ");
@@ -382,7 +438,6 @@ namespace AirplaneShooterNext
                 }
                 else
                 {
-
                     Console.WriteLine("Press any key to continue ...");
                     if (Console.ReadKey().Key == ConsoleKey.Y)
                     {
@@ -398,7 +453,24 @@ namespace AirplaneShooterNext
                     break;
                 }
             }
-            int counter = 0;
+        }
+
+        static int counter = 0;
+        static void Main()
+        {
+            _handler += new EventHandler(Handler);
+            SetConsoleCtrlHandler(_handler, true);
+
+            ConsoleHelper.SetConsoleFont(8);
+            Console.OutputEncoding = Encoding.Unicode;
+            new Window();
+
+            BufferSizeTitle();
+
+            Story();
+
+            Username();
+
             int life = 30;
 
             while (true)
@@ -422,7 +494,7 @@ namespace AirplaneShooterNext
                     MoveEnemyBullet(enemyBullets[i]);
                     if (KillHero(enemyBullets[i]))
                     {
-                        if (life / 10 != life-1 / 10)
+                        if (life / 10 != life - 1 / 10)
                         {
                             GoOnline.die((life / 10) + 1).Wait();
                         }
@@ -452,47 +524,6 @@ namespace AirplaneShooterNext
                 speed = score / 50;
                 Thread.Sleep(50 - speed);
             }
-        }
-
-        public static void Exceptions(string username)
-        {
-            try
-            {
-                bool usenameIsCorrect = username.Length != 0 || username.Length <= 20;
-            }
-            catch (ArgumentNullException)
-            {
-                throw new ArgumentNullException("Username could not be empty!");
-                throw;
-            }
-            catch (ApplicationException)
-            {
-                throw new ApplicationException("Too long username.");
-                throw;
-            }
-            finally
-            {
-                Console.WriteLine("Uncorrect username! Please, enter a correct username.");
-            }
-        }
-
-        public static void Story()
-        {
-            StreamReader sr = new StreamReader("..\\..\\story.txt");
-            string line = sr.ReadLine();
-           
-            while (line != null)
-            {
-                Console.ForegroundColor = ConsoleColor.DarkGreen;
-                Console.WriteLine(line);
-                line = sr.ReadLine();
-            }
-            sr.Close();
-            Console.WriteLine();
-            Console.WriteLine();
-            Console.WriteLine("Press any key to continue ...");
-            ConsoleKeyInfo userInput = Console.ReadKey();
-            Console.Clear();
         }
     }
 }
