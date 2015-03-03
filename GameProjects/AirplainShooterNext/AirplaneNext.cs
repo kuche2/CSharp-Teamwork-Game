@@ -80,7 +80,28 @@ namespace AirplaneShooterNext
         public static Random randNum = new Random();
 
 
-        public static List<string> levelPaths = new List<string>() { "..\\..\\level1.txt", "..\\..\\level2.txt", "..\\..\\level3.txt", "..\\..\\level4.txt", "..\\..\\level5.txt", "..\\..\\level6.txt", "..\\..\\level7.txt", "..\\..\\level8.txt", "..\\..\\level9.txt" };
+        public static List<string> levelPaths = new List<string>() 
+         { "..\\..\\Levels\\level1.txt", 
+            "..\\..\\Levels\\level2.txt", 
+            "..\\..\\Levels\\level3.txt", 
+            "..\\..\\Levels\\level4.txt", 
+            "..\\..\\Levels\\level5.txt", 
+            "..\\..\\Levels\\level6.txt", 
+            "..\\..\\Levels\\level7.txt", 
+            "..\\..\\Levels\\level8.txt", 
+            "..\\..\\Levels\\level9.txt", 
+            "..\\..\\Levels\\level10.txt", 
+            "..\\..\\Levels\\level11.txt", 
+            "..\\..\\Levels\\level12.txt", 
+            "..\\..\\Levels\\level13.txt", 
+            "..\\..\\Levels\\level14.txt", 
+            "..\\..\\Levels\\level15.txt", 
+            "..\\..\\Levels\\level16.txt", 
+            "..\\..\\Levels\\level17.txt", 
+            "..\\..\\Levels\\level18.txt", 
+            "..\\..\\Levels\\level19.txt", 
+            "..\\..\\Levels\\level20.txt", 
+            "..\\..\\Levels\\level21.txt" };
 
 
         public static char[,] airplainEmpty = { {' ', ' ', ' ', ' ', ' ', ' ', ' '},
