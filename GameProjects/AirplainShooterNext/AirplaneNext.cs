@@ -6,6 +6,7 @@ using System.Threading;
 using AirplainShooterNext;
 using ConsoleExtender;
 using System.Runtime.InteropServices;
+using System.IO;
 
 namespace AirplaneShooterNext
 {
@@ -221,6 +222,22 @@ namespace AirplaneShooterNext
             Console.CursorVisible = false;
         }
 
+        public static void Story()
+        {
+            StreamReader sr = new StreamReader("Story.txt");
+            string line = sr.ReadLine();
+            while (line != null)
+            {
+                Console.WriteLine(line);
+                line = sr.ReadLine();
+            }
+            sr.Close();
+            Console.WriteLine();
+            Console.WriteLine("Press a key...");
+            Console.ReadLine();
+            Console.Clear();
+        }
+
         public static bool goLeft = true;
 
         public static List<LittleEnemy> enemies = new List<LittleEnemy>();
@@ -334,7 +351,7 @@ namespace AirplaneShooterNext
         {
             Console.SetCursorPosition(90, 15);
             Console.ForegroundColor = ConsoleColor.White;
-            Console.Write("Life: ");
+            Console.Write("Blood: ");
             Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine(string.Join("", life));
             Console.SetCursorPosition(90, 20);
@@ -354,15 +371,29 @@ namespace AirplaneShooterNext
             _handler += new EventHandler(Handler);
             SetConsoleCtrlHandler(_handler, true);
 
-            ConsoleHelper.SetConsoleFont(0);
+            ConsoleHelper.SetConsoleFont(8);
             Console.OutputEncoding = Encoding.Unicode;
             new Window();
 
             BufferSizeTitle();
+            Story();
+            
             Console.Write("Enter username: ");
             string username = Console.ReadLine();
-            GoOnline.connect(username).Wait();
-            Console.Clear();
+            while (true)
+            {
+                if (username.Length == 0 || username.Length > 20)
+                {
+                    Exceptions(username);
+                }
+                else
+                {
+                    GoOnline.connect(username).Wait();
+                    Console.Clear();
+                    break;
+                }
+            }
+
             int counter = 0;
 
             while (true)
@@ -401,6 +432,18 @@ namespace AirplaneShooterNext
                 PrintLifeAndLives(life, lives);
                 speed = score / 50;
                 Thread.Sleep(50 - speed);
+            }
+        }
+
+        public static void Exceptions(string username)
+        {
+            if (username.Length == 0)
+            {
+                throw new ArgumentNullException("Please, enter your name.");
+            }
+            else if (username.Length > 20)
+            {
+                throw new ApplicationException("Too long name.");
             }
         }
     }
