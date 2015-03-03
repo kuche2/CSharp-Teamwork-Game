@@ -309,7 +309,6 @@ namespace AirplaneShooterNext
                     bullet.X >= currentAirplainPosX && bullet.X <= currentAirplainPosX + 8)
             {
                 hit = true;
-                GoOnline.die().Wait();
                 Audio.destroy();
                 bullet.Y = Window.Height - 1;
                 Console.SetCursorPosition(bullet.X, bullet.Y - 1);
@@ -429,10 +428,15 @@ namespace AirplaneShooterNext
                     if (KillHero(enemyBullets[i]))
                     {
                         life--;
+                        if(life % 5 == 0)
+                        {
+                            GoOnline.die((life/10)+1).Wait();
+                        }
                         if (life <= 0)
                         {
                             PrintLifeAndLives(0);
                             GameOver();
+                            break;
                         }
                     }
                     if (enemyBullets[i].Y == Window.Height - 1)
