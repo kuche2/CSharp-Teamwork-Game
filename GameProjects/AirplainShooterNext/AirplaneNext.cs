@@ -373,7 +373,7 @@ namespace AirplaneShooterNext
 
         public static int speed = 0;
         public static int score = 0;
-
+        public static bool isOnline = false;
         static void Main()
         {
             _handler += new EventHandler(Handler);
@@ -388,7 +388,15 @@ namespace AirplaneShooterNext
 
             Console.Write("Enter username: ");
             string username = Console.ReadLine();
-
+            Console.WriteLine("Do you want to get online stats? Press (Y)es or another key for NO");
+            if(Console.ReadKey().Key == ConsoleKey.Y)
+            {
+                isOnline = true;
+            }
+            else
+            {
+                isOnline = false;
+            }
             while (true)
             {
                 if (username.Length == 0 || username.Length > 20)
@@ -427,11 +435,11 @@ namespace AirplaneShooterNext
                     MoveEnemyBullet(enemyBullets[i]);
                     if (KillHero(enemyBullets[i]))
                     {
-                        life--;
-                        if(life % 5 == 0)
+                        if (life / 10 != life-1 / 10)
                         {
-                            GoOnline.die((life/10)+1).Wait();
+                            GoOnline.die((life / 10) + 1).Wait();
                         }
+                        life--;
                         if (life <= 0)
                         {
                             PrintLifeAndLives(0);

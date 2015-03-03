@@ -34,29 +34,32 @@ namespace AirplainShooterNext
 
         public static async Task connect(string username)
         {
-            client.BaseAddress = new Uri("http://game.igergov.com/");
-            client.DefaultRequestHeaders.Accept.Clear();
-            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-            HttpResponseMessage response = await client.GetAsync("api/Players/" + username);
-            if (response.IsSuccessStatusCode)
+            if(AirplaneShooterNext.AirplaneNext.isOnline == true)
             {
-                Player Player = await response.Content.ReadAsAsync<Player>();
-                if (Player.ToString().Length > 0)
+                client.BaseAddress = new Uri("http://game.igergov.com/");
+                client.DefaultRequestHeaders.Accept.Clear();
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                HttpResponseMessage response = await client.GetAsync("api/Players/" + username);
+                if (response.IsSuccessStatusCode)
                 {
-                    MyData = Player;
+                    Player Player = await response.Content.ReadAsAsync<Player>();
+                    if (Player.ToString().Length > 0)
+                    {
+                        MyData = Player;
+                    }
+                    else
+                    {
+                        CreateUser(username).Wait();
+                    }
                 }
                 else
                 {
                     CreateUser(username).Wait();
                 }
-            }
-            else
-            {
-                CreateUser(username).Wait();
-            }
-            LoginUser().Wait();
+                LoginUser().Wait();
 
-            Thread.Sleep(3000);
+                Thread.Sleep(3000);
+            }
         }
 
         public static async Task CreateUser(string username)
@@ -75,46 +78,58 @@ namespace AirplainShooterNext
 
         public static async Task LoginUser()
         {
-            MyData.Logged = true;
-            MyData.RealLives = 3;
-            MyData.RealScore = 0;
-            MyData.RealKilled = 0;
-            MyData.RealDeaths = 0;
-            var response = await client.PutAsJsonAsync("api/Players/" + MyData.PlayerID, MyData);
-            if (response.IsSuccessStatusCode)
+            if (AirplaneShooterNext.AirplaneNext.isOnline == true)
             {
-                Console.Clear();
-                Console.WriteLine("You are logged in!");
-                Console.WriteLine("{0}{1}{2}", "Username".PadRight(20), "Score".PadRight(20), "Registered at");
-                Console.WriteLine("{0}{1}{2}{3}", MyData.Name.PadRight(20), MyData.Score.ToString().PadRight(20), MyData.RegisterAt, MyData.RealScore);
+                MyData.Logged = true;
+                MyData.RealLives = 3;
+                MyData.RealScore = 0;
+                MyData.RealKilled = 0;
+                MyData.RealDeaths = 0;
+                var response = await client.PutAsJsonAsync("api/Players/" + MyData.PlayerID, MyData);
+                if (response.IsSuccessStatusCode)
+                {
+                    Console.Clear();
+                    Console.WriteLine("You are logged in!");
+                    Console.WriteLine("{0}{1}{2}", "Username".PadRight(20), "Score".PadRight(20), "Registered at");
+                    Console.WriteLine("{0}{1}{2}{3}", MyData.Name.PadRight(20), MyData.Score.ToString().PadRight(20), MyData.RegisterAt, MyData.RealScore);
+                }
             }
         }
 
         public static async Task kill(int score, int killed)
         {
-            MyData.RealScore = score;
-            MyData.RealKilled += killed;
-            var response = await client.PutAsJsonAsync("api/Players/" + MyData.PlayerID, MyData);
+            if (AirplaneShooterNext.AirplaneNext.isOnline == true)
+            {
+                MyData.RealScore = score;
+                MyData.RealKilled += killed;
+                var response = await client.PutAsJsonAsync("api/Players/" + MyData.PlayerID, MyData);
+            }
         }
 
         public static async Task die(int lives)
         {
-            MyData.RealDeaths = 3 - lives;
-            MyData.RealLives = lives;
-            var response = await client.PutAsJsonAsync("api/Players/" + MyData.PlayerID, MyData);
+            if (AirplaneShooterNext.AirplaneNext.isOnline == true)
+            {
+                MyData.RealDeaths = 3 - lives;
+                MyData.RealLives = lives;
+                var response = await client.PutAsJsonAsync("api/Players/" + MyData.PlayerID, MyData);
+            }
         }
 
         public static async Task disconnect()
         {
-            MyData.Logged = false;
-            MyData.Score += MyData.RealScore;
-            MyData.Death += MyData.RealDeaths;
-            MyData.Killed += MyData.RealKilled;
-            MyData.RealDeaths = 0;
-            MyData.RealKilled = 0;
-            MyData.RealLives = 0;
-            MyData.RealScore = 0;
-            var response = await client.PutAsJsonAsync("api/Players/" + MyData.PlayerID, MyData);
+            if (AirplaneShooterNext.AirplaneNext.isOnline == true)
+            {
+                MyData.Logged = false;
+                MyData.Score += MyData.RealScore;
+                MyData.Death += MyData.RealDeaths;
+                MyData.Killed += MyData.RealKilled;
+                MyData.RealDeaths = 0;
+                MyData.RealKilled = 0;
+                MyData.RealLives = 0;
+                MyData.RealScore = 0;
+                var response = await client.PutAsJsonAsync("api/Players/" + MyData.PlayerID, MyData);
+            }
         }
     }
 }
