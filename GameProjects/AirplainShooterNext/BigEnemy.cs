@@ -78,9 +78,9 @@ namespace AirplainShooterNext
             int random = AirplaneNext.randNum.Next(0, 30);
             if (random == 10)
             {
-                AirplaneNext.EnemyBullet enemyBull = new AirplaneNext.EnemyBullet(X + 2, Y + 3, ConsoleColor.White, 'Y');
-                AirplaneNext.EnemyBullet enemyBull1 = new AirplaneNext.EnemyBullet(X + 5, Y + 3, ConsoleColor.White, 'Y');
-                AirplaneNext.EnemyBullet enemyBull2 = new AirplaneNext.EnemyBullet(X + 8, Y + 3, ConsoleColor.White, 'Y');
+                AirplaneNext.EnemyBullet enemyBull = new AirplaneNext.EnemyBullet(X + 2, Y + 3, ConsoleColor.Black, 'Y');
+                AirplaneNext.EnemyBullet enemyBull1 = new AirplaneNext.EnemyBullet(X + 5, Y + 3, ConsoleColor.Black, 'Y');
+                AirplaneNext.EnemyBullet enemyBull2 = new AirplaneNext.EnemyBullet(X + 8, Y + 3, ConsoleColor.Black, 'Y');
                 AirplaneNext.enemyBullets.Add(enemyBull);
                 AirplaneNext.enemyBullets.Add(enemyBull1);
                 AirplaneNext.enemyBullets.Add(enemyBull2);

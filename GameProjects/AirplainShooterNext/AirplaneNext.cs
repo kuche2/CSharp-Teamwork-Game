@@ -441,7 +441,7 @@ namespace AirplaneShooterNext
         public static void PrintScore(int score)
         {
             Console.SetCursorPosition(90, 8);
-            Console.ForegroundColor = ConsoleColor.White;
+            Console.ForegroundColor = ConsoleColor.Black;
             Console.WriteLine("Player: {0}", username);
             Console.SetCursorPosition(90, 10);
             Console.WriteLine("Score: {0}", score);
@@ -450,21 +450,21 @@ namespace AirplaneShooterNext
         public static void PrintLifeAndLives(int life)
         {
             Console.SetCursorPosition(90, 15);
-            Console.ForegroundColor = ConsoleColor.White;
+            Console.ForegroundColor = ConsoleColor.Black;
             Console.Write("Blood: ");
-            Console.ForegroundColor = ConsoleColor.Green;
+            Console.ForegroundColor = ConsoleColor.DarkGreen;
             Console.WriteLine(new string(' ', 10));
             Console.SetCursorPosition(97, 15);
             if (life % 10 != 0)
             {
-                Console.WriteLine(new string('|', life % 10));
+                Console.WriteLine(new string('#', life % 10));
             }
             else if (life > 0)
             {
-                Console.WriteLine(new string('|', 10));
+                Console.WriteLine(new string('#', 10));
             }
             Console.SetCursorPosition(90, 20);
-            Console.ForegroundColor = ConsoleColor.White;
+            Console.ForegroundColor = ConsoleColor.Black;
             Console.Write("Lives: ");
             Console.ForegroundColor = ConsoleColor.Red;
             Console.WriteLine(new string(' ', 3));
@@ -604,7 +604,7 @@ namespace AirplaneShooterNext
                 {
                     if (boss.Count == 0)
                     {
-                        CreateBoss(3, ConsoleColor.White);
+                        CreateBoss(3, ConsoleColor.Black);
                         counter++;
                     }
                     for (int i = 0; i < boss.Count; i++)

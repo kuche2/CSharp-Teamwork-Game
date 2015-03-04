@@ -11,6 +11,7 @@
     <AssemblyName>AirplainShooterNext</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -21,6 +22,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -30,6 +32,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
@@ -77,8 +80,36 @@
     <Content Include="level7.txt" />
     <Content Include="level8.txt" />
     <Content Include="level9.txt" />
+    <Content Include="Levels\level1.txt" />
+    <Content Include="Levels\level10.txt" />
+    <Content Include="Levels\level11.txt" />
+    <Content Include="Levels\level12.txt" />
+    <Content Include="Levels\level13.txt" />
+    <Content Include="Levels\level14.txt" />
+    <Content Include="Levels\level15.txt" />
+    <Content Include="Levels\level16.txt" />
+    <Content Include="Levels\level17.txt" />
+    <Content Include="Levels\level18.txt" />
+    <Content Include="Levels\level19.txt" />
+    <Content Include="Levels\level2.txt" />
+    <Content Include="Levels\level20.txt" />
+    <Content Include="Levels\level21.txt" />
+    <Content Include="Levels\level3.txt" />
+    <Content Include="Levels\level4.txt" />
+    <Content Include="Levels\level5.txt" />
+    <Content Include="Levels\level6.txt" />
+    <Content Include="Levels\level7.txt" />
+    <Content Include="Levels\level8.txt" />
+    <Content Include="Levels\level9.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="App_Data\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PreBuildEvent>
+    </PreBuildEvent>
+  </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
