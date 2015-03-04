@@ -10,6 +10,9 @@ using System.Threading;
 
 namespace AirplainShooterNext
 {
+    /// <summary>
+    /// Structure/Class that store user data
+    /// </summary>
     public class Player
     {
         public int PlayerID { get; set; }
@@ -25,13 +28,19 @@ namespace AirplainShooterNext
         public int RealLives { get; set; }
         public int RealDeaths { get; set; }
     }
-
+    /// <summary>
+    /// Go Online script that implements multiplayer statistics on player's score etc
+    /// </summary>
     static class GoOnline
     {
         static public Player MyData;
 
         static HttpClient client = new HttpClient();
-
+        /// <summary>
+        /// Connect to server with username and creates new instance of httpClient
+        /// </summary>
+        /// <param name="username">String variable for username of player</param>
+        /// <returns>The method returns and store user data from server if user exists or create new user</returns>
         public static async Task connect(string username)
         {
             if(AirplaneShooterNext.AirplaneNext.isOnline == true)
@@ -62,6 +71,11 @@ namespace AirplainShooterNext
             }
         }
 
+        /// <summary>
+        /// Create new user if user not exists
+        /// </summary>
+        /// <param name="username">Username of player as string</param>
+        /// <returns>Store data from server for new user</returns>
         public static async Task CreateUser(string username)
         {
 
@@ -76,6 +90,10 @@ namespace AirplainShooterNext
             }
         }
 
+        /// <summary>
+        /// Username of player as string
+        /// </summary>
+        /// <returns>Get data from server</returns>
         public static async Task LoginUser()
         {
             if (AirplaneShooterNext.AirplaneNext.isOnline == true)
@@ -95,7 +113,12 @@ namespace AirplainShooterNext
                 }
             }
         }
-
+        /// <summary>
+        /// This method store data in server 
+        /// </summary>
+        /// <param name="score">Score of player</param>
+        /// <param name="killed">Killed ships by player</param>
+        /// <returns>No data returned</returns>
         public static async Task kill(int score, int killed)
         {
             if (AirplaneShooterNext.AirplaneNext.isOnline == true)
@@ -105,7 +128,11 @@ namespace AirplainShooterNext
                 var response = await client.PutAsJsonAsync("api/Players/" + MyData.PlayerID, MyData);
             }
         }
-
+        /// <summary>
+        /// Update user data on server after user was killed
+        /// </summary>
+        /// <param name="lives">User lives</param>
+        /// <returns>No data returned</returns>
         public static async Task die(int lives)
         {
             if (AirplaneShooterNext.AirplaneNext.isOnline == true)
@@ -116,6 +143,10 @@ namespace AirplainShooterNext
             }
         }
 
+        /// <summary>
+        /// Change status of player on disconnect
+        /// </summary>
+        /// <returns>No data returned</returns>
         public static async Task disconnect()
         {
             if (AirplaneShooterNext.AirplaneNext.isOnline == true)

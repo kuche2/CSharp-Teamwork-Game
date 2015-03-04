@@ -581,7 +581,8 @@ namespace AirplaneShooterNext
         {
             _handler += new EventHandler(Handler);
             SetConsoleCtrlHandler(_handler, true);
-
+            Console.BackgroundColor = ConsoleColor.White;
+            Console.Clear();
             ConsoleHelper.SetConsoleFont(2);
             Console.OutputEncoding = Encoding.Unicode;
             new Window();
