@@ -55,6 +55,7 @@ namespace AirplaneShooterNext
 
             Console.SetCursorPosition(Window.Width - 30, 1);
             Console.WriteLine("Cleanup complete");
+            HighScore(score, username);
             GoOnline.disconnect().Wait();
             Thread.Sleep(1000); //simulate some cleanup delay
 
@@ -377,7 +378,33 @@ namespace AirplaneShooterNext
                 }
             }
         }
-
+        public static void HighScore(int score, string username)
+        {
+            var scores = new SortedDictionary<int, string>();
+            scores.Add(score, username);
+            string path = "..\\..\\highScore.txt";
+            if(File.Exists(path) == false)
+            {
+                File.Create(path);
+            }
+            StreamReader sr = new StreamReader(path);
+            string line;
+            List<string> fileContent = new List<string>();
+            while ((line = sr.ReadLine()) != null)
+            {
+                fileContent.Add(line);
+            }
+            sr.Close();
+            fileContent.Add(String.Format("{0}{1} points", username.PadRight(20), score.ToString().PadLeft(10)));
+            fileContent.RemoveAt(0);
+            var writer = new StreamWriter(path);
+            writer.WriteLine("{0}{1}", "Username".PadRight(20), "High Score".PadLeft(10));
+            foreach (var scor in fileContent)
+            {
+                writer.WriteLine(scor);
+            }
+            writer.Close();
+        }
         public static bool KillHero(EnemyBullet bullet)
         {
             bool hit = false;
@@ -401,6 +428,7 @@ namespace AirplaneShooterNext
             Console.WriteLine("Your Score: {0}", score);
             Console.SetCursorPosition(60, 32);
             Console.WriteLine("Press any key to exit");
+            HighScore(score, username);
             while (true)
             {
                 Console.ReadKey();
