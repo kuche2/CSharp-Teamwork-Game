@@ -432,6 +432,7 @@ namespace AirplaneShooterNext
             while (true)
             {
                 Console.ReadKey();
+                GoOnline.disconnect().Wait();
                 Environment.Exit(-1);
             }
             //TO DO
