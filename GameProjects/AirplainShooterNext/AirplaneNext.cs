@@ -122,6 +122,14 @@ namespace AirplaneShooterNext
                                    {' ', ' ', ' ', '*', '*', 'v', '*', '*', ' ', ' ', ' '},
                                    {' ', '*', '*', ' ', ' ', '*', ' ', ' ', '*', '*', ' '},
                                    {'*', ' ', ' ', ' ', ' ', 'V', ' ', ' ', ' ', ' ', '*'}  };
+        public static char[,] bigAimClear = {  {' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '},
+                                   {' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '},
+                                   {' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '},
+                                   {' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '},
+                                   {' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '},
+                                   {' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '}  };
+        public static char[,] bigAimEmpty = { { ' ' }, { ' ' }, { ' ' }, { ' ' }, { ' ' }, { ' ' } };
+        public static char[,] bigAimEmptyTop = {  {' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '}};
         public static int currentBigAimPosX = Window.Width / 2 - bigAim.GetLength(0);
         public static int currentBigAimPosY = bigAim.GetLength(0) - 2;
 
@@ -204,7 +212,14 @@ namespace AirplaneShooterNext
                     Console.WriteLine(' ');
                 }
             }
-            KillEnemy(bullet);
+            if (bossLevel)
+            {
+                KillBoss(bullet);
+            }
+            else
+            {
+                KillEnemy(bullet);
+            }
         }
 
         public static void AirplainMovingLimits()
@@ -249,6 +264,7 @@ namespace AirplaneShooterNext
         public static bool goLeft = true;
 
         public static List<LittleEnemy> enemies = new List<LittleEnemy>();
+        public static List<BigEnemy> boss = new List<BigEnemy>();
 
         public static List<EnemyBullet> enemyBullets = new List<EnemyBullet>();
         public static List<Bullet> bullets = new List<Bullet>();
@@ -264,6 +280,17 @@ namespace AirplaneShooterNext
             }
 
         }
+        public static void CreateBoss(int number, ConsoleColor color)
+        {
+            Level(levelPaths[counter]);
+            GoOnline.kill(score, number).Wait();
+            for (int i = 1; i <= number; i++)
+            {
+                var enemy = new BigEnemy(i*20, 10, color, bigAim, 10);
+                boss.Add(enemy);
+            }
+
+        }
 
         public static ConsoleColor[] colors = { ConsoleColor.DarkYellow, ConsoleColor.Red, ConsoleColor.Cyan };
 
@@ -276,6 +303,10 @@ namespace AirplaneShooterNext
                 {
                     DrawFigureAtPosition(enemies[i].X, enemies[i].Y, ConsoleColor.DarkYellow, littleAimClear);
                     enemies.RemoveAt(i);
+                    if (enemies.Count == 0 && counter > 0 && (counter - 3) %4  == 0)
+                    {
+                        bossLevel = true;
+                    }
                     score += 10;
                     Audio.destroy();
                     Console.SetCursorPosition(bullet.X, bullet.Y + 1);
@@ -303,6 +334,41 @@ namespace AirplaneShooterNext
                     DrawFigureAtPosition(enemies[i].X, enemies[i].Y, enemies[i].Color, littleAim);
                     //enemies.RemoveAt(i);
                     score += 10;
+                    Audio.destroy();
+                    Console.SetCursorPosition(bullet.X, bullet.Y + 1);
+                    Console.WriteLine(' ');
+                    bullet.Y = 0;
+                    break;
+                }
+            }
+        }
+
+        public static void KillBoss(Bullet bullet)
+        {
+            for (int i = 0; i < boss.Count; i++)
+            {
+                if (boss[i].Blood == 1 && bullet.Y <= boss[i].Y + 5 && bullet.Y >= boss[i].Y &&
+                    bullet.X >= boss[i].X && bullet.X <= boss[i].X + 10)
+                {
+                    DrawFigureAtPosition(boss[i].X, boss[i].Y, ConsoleColor.DarkYellow, bigAimClear);
+                    boss.RemoveAt(i);
+                    if (boss.Count == 0)
+                    {
+                        bossLevel = false;
+                    }
+                    score += 50;
+                    Audio.destroy();
+                    Console.SetCursorPosition(bullet.X, bullet.Y + 1);
+                    Console.WriteLine(' ');
+                    bullet.Y = 0;
+                    break;
+                }
+                else if (boss[i].Blood > 1 && bullet.Y <= boss[i].Y + 5 && bullet.Y >= boss[i].Y &&
+                    bullet.X >= boss[i].X && bullet.X <= boss[i].X + 10)
+                {
+                    boss[i].Blood --;
+                    DrawFigureAtPosition(boss[i].X, boss[i].Y, ConsoleColor.Red, bigAim);
+                    
                     Audio.destroy();
                     Console.SetCursorPosition(bullet.X, bullet.Y + 1);
                     Console.WriteLine(' ');
@@ -344,8 +410,10 @@ namespace AirplaneShooterNext
 
         public static void PrintScore(int score)
         {
-            Console.SetCursorPosition(90, 10);
+            Console.SetCursorPosition(90, 8);
             Console.ForegroundColor = ConsoleColor.White;
+            Console.WriteLine("Player: {0}", username);
+            Console.SetCursorPosition(90, 10);
             Console.WriteLine("Score: {0}", score);
         }
 
@@ -445,12 +513,13 @@ namespace AirplaneShooterNext
             Console.Clear();
         }
 
+        public static string username = string.Empty;
         public static void Username() 
         {
             while (true)
             {
                 Console.Write("Enter username: ");
-                string username = Console.ReadLine();
+                username = Console.ReadLine();
 
                 if (username.Length == 0 || username.Length > 20)
                 {
@@ -476,12 +545,14 @@ namespace AirplaneShooterNext
         }
 
         static int counter = 0;
+        public static bool bossLevel = false;
+
         static void Main()
         {
             _handler += new EventHandler(Handler);
             SetConsoleCtrlHandler(_handler, true);
 
-            ConsoleHelper.SetConsoleFont(8);
+            ConsoleHelper.SetConsoleFont(2);
             Console.OutputEncoding = Encoding.Unicode;
             new Window();
 
@@ -498,16 +569,33 @@ namespace AirplaneShooterNext
                 DrawFigureAtPosition(currentAirplainPosX, currentAirplainPosY, ConsoleColor.DarkGreen, airplain);
                 Hero.UserAiplainKeysOptions();
 
-                if (enemies.Count == 0)
+                if (bossLevel)
                 {
-                    CreateLittleEnemies(7, colors[counter % 3]);
-                    counter++;
+                    if (boss.Count == 0)
+                    {
+                        CreateBoss(3, ConsoleColor.White);
+                        counter++;
+                    }
+                    for (int i = 0; i < boss.Count; i++)
+                    {
+                        boss[i].Move();
+                        boss[i].Shoot();
+                    }    
                 }
-
-                for (int i = 0; i < enemies.Count; i++)
+                else if(counter == 0 || !bossLevel)
                 {
-                    enemies[i].Move();
-                    enemies[i].Shoot();
+                    if (enemies.Count == 0)
+                    {
+                        CreateLittleEnemies(7, colors[counter % 3]);
+                        counter++;    
+                    }
+
+                    for (int i = 0; i < enemies.Count; i++)
+                    {
+                        enemies[i].Move();
+                        enemies[i].Shoot();
+                    }
+                    
                 }
                 for (int i = 0; i < enemyBullets.Count; i++)
                 {

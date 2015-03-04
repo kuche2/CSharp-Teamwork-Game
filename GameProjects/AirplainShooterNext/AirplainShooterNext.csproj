@@ -53,6 +53,7 @@
   <ItemGroup>
     <Compile Include="AirplaneNext.cs" />
     <Compile Include="Audio.cs" />
+    <Compile Include="BigEnemy.cs" />
     <Compile Include="ConsoleHelper.cs" />
     <Compile Include="GoOnline.cs" />
     <Compile Include="Hero.cs" />
