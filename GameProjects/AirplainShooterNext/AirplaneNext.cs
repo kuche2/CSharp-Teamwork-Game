@@ -432,6 +432,7 @@ namespace AirplaneShooterNext
             while (true)
             {
                 Console.ReadKey();
+                Environment.Exit(-1);
             }
             //TO DO
         }
