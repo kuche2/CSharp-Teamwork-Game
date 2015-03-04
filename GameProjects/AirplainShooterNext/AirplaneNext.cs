@@ -227,12 +227,27 @@ namespace AirplaneShooterNext
         {
             if (currentAirplainPosX == 0)
             {
-                DrawFigureAtPosition(currentAirplainPosX, currentAirplainPosY, ConsoleColor.Black, airplainEmpty);
+                if(white == true)
+                {
+                    DrawFigureAtPosition(currentAirplainPosX, currentAirplainPosY, ConsoleColor.Black, airplainEmpty);
+                }
+                else
+                {
+                    DrawFigureAtPosition(currentAirplainPosX, currentAirplainPosY, ConsoleColor.White, airplainEmpty);
+                }
                 currentAirplainPosX += 1;
             }
             if (currentAirplainPosX == Window.Width - 48)
             {
-                DrawFigureAtPosition(currentAirplainPosX, currentAirplainPosY, ConsoleColor.Black, airplainEmpty);
+
+                if (white == true)
+                {
+                    DrawFigureAtPosition(currentAirplainPosX, currentAirplainPosY, ConsoleColor.Black, airplainEmpty);
+                }
+                else
+                {
+                    DrawFigureAtPosition(currentAirplainPosX, currentAirplainPosY, ConsoleColor.White, airplainEmpty);
+                }
                 currentAirplainPosX -= 1;
             }
         }
@@ -441,7 +456,17 @@ namespace AirplaneShooterNext
         public static void PrintScore(int score)
         {
             Console.SetCursorPosition(90, 8);
-            Console.ForegroundColor = ConsoleColor.Black;
+
+            if (white == true)
+            {
+
+                Console.ForegroundColor = ConsoleColor.Black;
+            }
+            else
+            {
+                Console.ForegroundColor = ConsoleColor.White;
+
+            }
             Console.WriteLine("Player: {0}", username);
             Console.SetCursorPosition(90, 10);
             Console.WriteLine("Score: {0}", score);
@@ -450,7 +475,16 @@ namespace AirplaneShooterNext
         public static void PrintLifeAndLives(int life)
         {
             Console.SetCursorPosition(90, 15);
-            Console.ForegroundColor = ConsoleColor.Black;
+            if(white == true)
+            {
+
+                Console.ForegroundColor = ConsoleColor.Black;
+            }
+            else
+            {
+                Console.ForegroundColor = ConsoleColor.White;
+
+            }
             Console.Write("Blood: ");
             Console.ForegroundColor = ConsoleColor.DarkGreen;
             Console.WriteLine(new string(' ', 10));
@@ -464,7 +498,17 @@ namespace AirplaneShooterNext
                 Console.WriteLine(new string('#', 10));
             }
             Console.SetCursorPosition(90, 20);
-            Console.ForegroundColor = ConsoleColor.Black;
+
+            if (white == true)
+            {
+
+                Console.ForegroundColor = ConsoleColor.Black;
+            }
+            else
+            {
+                Console.ForegroundColor = ConsoleColor.White;
+
+            }
             Console.Write("Lives: ");
             Console.ForegroundColor = ConsoleColor.Red;
             Console.WriteLine(new string(' ', 3));
@@ -576,12 +620,22 @@ namespace AirplaneShooterNext
 
         static int counter = 0;
         public static bool bossLevel = false;
-
+        public static bool white { get; set; }
         static void Main()
         {
             _handler += new EventHandler(Handler);
             SetConsoleCtrlHandler(_handler, true);
-            Console.BackgroundColor = ConsoleColor.White;
+            Console.WriteLine("The default color of console is Black press 'Y' if you want White console");
+            if(Console.ReadKey().Key == ConsoleKey.Y)
+            {
+                white = true;
+                Console.BackgroundColor = ConsoleColor.White;
+            }
+            else
+            {
+                white = false;
+                Console.BackgroundColor = ConsoleColor.Black;
+            }
             Console.Clear();
             ConsoleHelper.SetConsoleFont(2);
             Console.OutputEncoding = Encoding.Unicode;
@@ -604,7 +658,14 @@ namespace AirplaneShooterNext
                 {
                     if (boss.Count == 0)
                     {
-                        CreateBoss(3, ConsoleColor.Black);
+                        if(white == true)
+                        {
+                            CreateBoss(3, ConsoleColor.Black);
+                        }
+                        else
+                        {
+                            CreateBoss(3, ConsoleColor.White);
+                        }
                         counter++;
                     }
                     for (int i = 0; i < boss.Count; i++)
