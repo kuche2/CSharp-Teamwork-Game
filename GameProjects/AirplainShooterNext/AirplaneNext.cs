@@ -82,27 +82,27 @@ namespace AirplaneShooterNext
 
 
         public static List<string> levelPaths = new List<string>() 
-         { "..\\..\\Levels\\level1.txt", 
-            "..\\..\\Levels\\level2.txt", 
-            "..\\..\\Levels\\level3.txt", 
-            "..\\..\\Levels\\level4.txt", 
-            "..\\..\\Levels\\level5.txt", 
-            "..\\..\\Levels\\level6.txt", 
-            "..\\..\\Levels\\level7.txt", 
-            "..\\..\\Levels\\level8.txt", 
-            "..\\..\\Levels\\level9.txt", 
-            "..\\..\\Levels\\level10.txt", 
-            "..\\..\\Levels\\level11.txt", 
-            "..\\..\\Levels\\level12.txt", 
-            "..\\..\\Levels\\level13.txt", 
-            "..\\..\\Levels\\level14.txt", 
-            "..\\..\\Levels\\level15.txt", 
-            "..\\..\\Levels\\level16.txt", 
-            "..\\..\\Levels\\level17.txt", 
-            "..\\..\\Levels\\level18.txt", 
-            "..\\..\\Levels\\level19.txt", 
-            "..\\..\\Levels\\level20.txt", 
-            "..\\..\\Levels\\level21.txt" };
+         {  "Data\\level1.txt", 
+            "Data\\level2.txt", 
+            "Data\\level3.txt", 
+            "Data\\level4.txt", 
+            "Data\\level5.txt", 
+            "Data\\level6.txt", 
+            "Data\\level7.txt", 
+            "Data\\level8.txt", 
+            "Data\\level9.txt", 
+            "Data\\level10.txt", 
+            "Data\\level11.txt", 
+            "Data\\level12.txt", 
+            "Data\\level13.txt", 
+            "Data\\level14.txt", 
+            "Data\\level15.txt", 
+            "Data\\level16.txt", 
+            "Data\\level17.txt", 
+            "Data\\level18.txt", 
+            "Data\\level19.txt", 
+            "Data\\level20.txt", 
+            "Data\\level21.txt" };
 
 
         public static char[,] airplainEmpty = { {' ', ' ', ' ', ' ', ' ', ' ', ' '},
@@ -397,7 +397,7 @@ namespace AirplaneShooterNext
         {
             var scores = new SortedDictionary<int, string>();
             scores.Add(score, username);
-            string path = "..\\..\\highScore.txt";
+            string path = "Data\\highScore.txt";
             if(File.Exists(path) == false)
             {
                 File.Create(path);
@@ -551,7 +551,7 @@ namespace AirplaneShooterNext
 
         public static void Story()
         {
-            StreamReader sr = new StreamReader("..\\..\\story.txt");
+            StreamReader sr = new StreamReader("Data\\story.txt");
             string line = sr.ReadLine();
 
             while (line != null)

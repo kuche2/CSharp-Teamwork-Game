@@ -80,35 +80,35 @@
     <Content Include="level7.txt" />
     <Content Include="level8.txt" />
     <Content Include="level9.txt" />
-    <Content Include="Levels\level1.txt" />
-    <Content Include="Levels\level10.txt" />
-    <Content Include="Levels\level11.txt" />
-    <Content Include="Levels\level12.txt" />
-    <Content Include="Levels\level13.txt" />
-    <Content Include="Levels\level14.txt" />
-    <Content Include="Levels\level15.txt" />
-    <Content Include="Levels\level16.txt" />
-    <Content Include="Levels\level17.txt" />
-    <Content Include="Levels\level18.txt" />
-    <Content Include="Levels\level19.txt" />
-    <Content Include="Levels\level2.txt" />
-    <Content Include="Levels\level20.txt" />
-    <Content Include="Levels\level21.txt" />
-    <Content Include="Levels\level3.txt" />
-    <Content Include="Levels\level4.txt" />
-    <Content Include="Levels\level5.txt" />
-    <Content Include="Levels\level6.txt" />
-    <Content Include="Levels\level7.txt" />
-    <Content Include="Levels\level8.txt" />
-    <Content Include="Levels\level9.txt" />
+    <Content Include="Data\level1.txt" />
+    <Content Include="Data\level10.txt" />
+    <Content Include="Data\level11.txt" />
+    <Content Include="Data\level12.txt" />
+    <Content Include="Data\level13.txt" />
+    <Content Include="Data\level14.txt" />
+    <Content Include="Data\level15.txt" />
+    <Content Include="Data\level16.txt" />
+    <Content Include="Data\level17.txt" />
+    <Content Include="Data\level18.txt" />
+    <Content Include="Data\level19.txt" />
+    <Content Include="Data\level2.txt" />
+    <Content Include="Data\level20.txt" />
+    <Content Include="Data\level21.txt" />
+    <Content Include="Data\level3.txt" />
+    <Content Include="Data\level4.txt" />
+    <Content Include="Data\level5.txt" />
+    <Content Include="Data\level6.txt" />
+    <Content Include="Data\level7.txt" />
+    <Content Include="Data\level8.txt" />
+    <Content Include="Data\level9.txt" />
+    <Content Include="Data\story.txt" />
+    <Content Include="test.txt" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="App_Data\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PreBuildEvent>
-    </PreBuildEvent>
+    <PreBuildEvent>xcopy /y $(ProjectDir)Audio\* $(ProjectDir)$(OutDir)Audio\*
+xcopy /y $(ProjectDir)Data\* $(ProjectDir)$(OutDir)Data\*</PreBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
