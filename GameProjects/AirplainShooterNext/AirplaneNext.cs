@@ -501,7 +501,7 @@ namespace AirplaneShooterNext
             }
             finally
             {
-                Console.WriteLine("Uncorrect username!");
+                Console.WriteLine("Incorrect username!");
             }
         }
 
